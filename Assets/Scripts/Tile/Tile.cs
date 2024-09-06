@@ -13,11 +13,11 @@ public class Tile : MonoBehaviour
     Tile[] adjacentTiles = new Tile[4];
     int[] costs = new int[4];
 
-    bool isRotate = false;
+    public bool isRotate = false;
 
     public event Action<bool> isRotateChanged;
 
-    void Rotate()
+    public void Rotate()
     {
         isRotate ^= true;
         isRotateChanged?.Invoke(isRotate);
