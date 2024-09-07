@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7919490348698879445}
   - component: {fileID: 389482649131740252}
+  - component: {fileID: -199480563521736613}
   - component: {fileID: 2187748224863942925}
   m_Layer: 0
   m_Name: Goal
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 95d7b84101df778459558aab9a486066, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -85,6 +86,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-199480563521736613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463055591325702526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4cd61dd55e3eb44b0e2f1b27714682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2187748224863942925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,3 +113,7 @@ MonoBehaviour:
   floatAmplitude: 0.05
   floatSpeed: 3
   startY: 0
+  isCollected: 0
+  moveUpDistance: 1
+  duration: 0.5
+  fadeSpeed: 1

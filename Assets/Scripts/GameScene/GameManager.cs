@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public int actionPoint;
 
     public GameObject player;
+    public GameObject goal;
 
     public Button[] buttons;
     private bool firstUILoad = true;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
 
             actionPoint = tileGen.actionPoint;
             player = FindObjectOfType<PlayerMove>().gameObject;
+            goal = FindObjectOfType<Goal>().gameObject;
 
             UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
             firstUILoad = false;
@@ -63,6 +65,7 @@ public class GameManager : MonoBehaviour
             UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
             player.GetComponent<PlayerMove>().moveEnd = false;
 
+            GameEndCheck();
             Debug.Log($"이동 끝 포인트: {actionPoint}");
         }
 
@@ -73,6 +76,7 @@ public class GameManager : MonoBehaviour
             rotatingTile.RotateEnd = false;
             rotatingTile = null;
 
+            GameEndCheck();
             Debug.Log($"회전 끝 포인트: {actionPoint}");
         }
         
@@ -80,6 +84,29 @@ public class GameManager : MonoBehaviour
         {
             SelectTile();
         }
+    }
+
+    void GameEndCheck()
+    {
+        if (playerPosition == goalPosition)
+        {
+            Clear();
+        }
+        else if (actionPoint == 0)
+        {
+            GameOver();
+        }
+    }
+
+    void Clear()
+    {
+        //사탕 획득 모션
+        goal.GetComponent<FloatingItem>().isCollected = true;
+    }
+
+    void GameOver()
+    {
+
     }
 
     void MovePlayer(Button button)
@@ -193,6 +220,7 @@ public class GameManager : MonoBehaviour
         // 여기에 오브젝트를 다시 클릭했을 때 수행할 동작 추가
         obj.GetComponent<Tile>().Rotate();
         rotatingTile = obj.GetComponent<TileRotate>();
+        rotatingTile.RotateEnd = false;
         actionPoint -= 1;
 
         ResetObjectSize();
