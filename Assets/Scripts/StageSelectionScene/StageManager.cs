@@ -4,9 +4,7 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    public StageData currentStageData;
-
-    
+    public StageData currentStageData = null;
     
     private void Awake()
     {

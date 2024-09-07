@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
     public void Rotate()
     {
         isRotate ^= true;
+        objectPosition = -objectPosition;
         isRotateChanged?.Invoke(isRotate);
         Update();
 

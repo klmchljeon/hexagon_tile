@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class TileGenerator : MonoBehaviour
 {
+    [SerializeField]
+    private StageData TestStage;
+
     public GameObject[] tilePrefabs;
+    
     public GameObject candy;
+    public Vector2 goalIndex;
+
+    public GameObject player;
+    public Vector2 playerIndex;
 
     public GameObject tileParent;
 
     float tileWidth = 0f;
     float tileHeight = 0f;
 
-    GameObject[,] tileList = new GameObject[6,6];
+    public GameObject[,] tileList = new GameObject[6,6];
 
     private void Awake()
     {
@@ -22,14 +30,7 @@ public class TileGenerator : MonoBehaviour
     // Start is called before the first frame update 
     void Start()
     {
-        SpriteRenderer spriteRenderer = tilePrefabs[0].GetComponent<SpriteRenderer>();
-        Vector2 spriteSize = spriteRenderer.bounds.size;
-
-        tileWidth = spriteSize.x - 0.01f;
-        tileHeight = spriteSize.y;
-
-        Debug.Log(tileWidth);
-
+        CalculateTileBounds();
         SetupStage();
     }
 
@@ -41,7 +42,15 @@ public class TileGenerator : MonoBehaviour
 
     void SetupStage()
     {
-        StageData stageData = StageManager.Instance.currentStageData;
+        StageData stageData;
+        if (StageManager.Instance == null)
+        {
+            stageData = TestStage;
+        }
+        else
+        {
+            stageData = StageManager.Instance.currentStageData;
+        }
 
         if (stageData != null)
         {
@@ -60,21 +69,41 @@ public class TileGenerator : MonoBehaviour
                     }
 
                     tileObject.transform.SetParent(tileParent.transform);
-
+                    tileObject.name = $"tile {x} {y}";
 
                     tileList[x,y] = tileObject;
                 }
             }
 
-            GameObject goalTile = tileList[(int)stageData.goalPosition.x, (int)stageData.goalPosition.y];
-            GameObject goalObject = Instantiate(candy, goalTile.transform);
+            goalIndex = new Vector2(stageData.goalPosition.x, stageData.goalPosition.y);
+
+            GameObject goalTile = tileList[(int)goalIndex.x, (int)goalIndex.y];
+            GameObject goalObject = Instantiate(candy);
 
             Vector3 goalPosition = (Vector3)(goalTile.GetComponent<Tile>().objectPosition);
             
-            goalObject.transform.localPosition = goalPosition;
-            goalObject.transform.localEulerAngles = new Vector3(0,0, (360 - goalTile.transform.eulerAngles.z)%360);
+            goalObject.transform.position = goalTile.transform.position + goalPosition;
             goalObject.GetComponent<FloatingItem>().startY = goalPosition.y;
+            //
+
+            playerIndex = new Vector2(stageData.playerPosition.x, stageData.playerPosition.y);
+
+            GameObject playerTile = tileList[(int)playerIndex.x, (int)playerIndex.y];
+            GameObject playerObject = Instantiate(player);
+
+            Vector3 playerPosition = (Vector3)(playerTile.GetComponent<Tile>().objectPosition);
+
+            playerObject.transform.position = playerTile.transform.position + playerPosition;
         }
+    }
+
+    void CalculateTileBounds()
+    {
+        SpriteRenderer spriteRenderer = tilePrefabs[0].GetComponent<SpriteRenderer>();
+        Vector2 spriteSize = spriteRenderer.bounds.size;
+
+        tileWidth = spriteSize.x - 0.01f;
+        tileHeight = spriteSize.y;
     }
 
     Vector3 CalculatePosition(int x, int y)
