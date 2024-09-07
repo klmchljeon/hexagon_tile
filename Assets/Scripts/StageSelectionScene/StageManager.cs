@@ -6,6 +6,8 @@ public class StageManager : MonoBehaviour
 
     public StageData currentStageData;
 
+    
+    
     private void Awake()
     {
         if (Instance == null)

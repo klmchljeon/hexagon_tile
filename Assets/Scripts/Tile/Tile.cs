@@ -15,8 +15,10 @@ public class Tile : MonoBehaviour
 
     public bool isRotate = false;
 
-    public event Action<bool> isRotateChanged;
+    public Vector2 objectPosition;
 
+    public event Action<bool> isRotateChanged;
+    
     public void Rotate()
     {
         isRotate ^= true;

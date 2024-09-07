@@ -4,23 +4,23 @@ using UnityEngine.UI;
 
 public class StageButton : MonoBehaviour
 {
-    public StageData stageData; // ¹öÆ°¿¡ ÇÒ´çÇÒ StageData
-    Button button;       // À¯´ÏÆ¼ÀÇ ¹öÆ° ÄÄÆ÷³ÍÆ®
+    public StageData stageData; // ë²„íŠ¼ì— í• ë‹¹í•  StageData
+    Button button;       // ìœ ë‹ˆí‹°ì˜ ë²„íŠ¼ ì»´í¬ë„ŒíŠ¸
 
     private void Start()
     {
         button = GetComponent<Button>();
-        // ¹öÆ° Å¬¸¯ ½Ã ÀÌº¥Æ® ÇÒ´ç
+        // ë²„íŠ¼ í´ë¦­ ì‹œ ì´ë²¤íŠ¸ í• ë‹¹
         button.onClick.AddListener(OnStageButtonClick);
     }
 
-    // ¹öÆ°ÀÌ Å¬¸¯µÇ¾úÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+    // ë²„íŠ¼ì´ í´ë¦­ë˜ì—ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
     void OnStageButtonClick()
     {
-        // Å¬¸¯µÈ ¹öÆ°ÀÇ StageData¸¦ StageManager¿¡ ÀúÀå
+        // í´ë¦­ëœ ë²„íŠ¼ì˜ StageDataë¥¼ StageManagerì— ì €ì¥
         StageManager.Instance.currentStageData = stageData;
 
-        // °ÔÀÓ ¾ÀÀ¸·Î ÀÌµ¿
+        // ê²Œì„ ì”¬ìœ¼ë¡œ ì´ë™
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
     }
 }

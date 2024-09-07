@@ -4,43 +4,57 @@ using UnityEngine;
 [CustomEditor(typeof(StageData))]
 public class StageDataEditor : Editor
 {
+    private SerializedProperty stageNum;
     private SerializedProperty tileNum;
     private SerializedProperty tileRotate;
-    private int width = 6;  // 2Â÷¿ø ¹è¿­ÀÇ °¡·Î Å©±â
-    private int height = 6; // 2Â÷¿ø ¹è¿­ÀÇ ¼¼·Î Å©±â
+    private SerializedProperty player;
+    private int width = 6;  // 2ì°¨ì› ë°°ì—´ì˜ ê°€ë¡œ í¬ê¸°
+    private int height = 6; // 2ì°¨ì› ë°°ì—´ì˜ ì„¸ë¡œ í¬ê¸°
 
     private void OnEnable()
     {
-        // 1Â÷¿ø ¹è¿­·Î º¯È¯µÈ tiles ¹è¿­¿¡ Á¢±Ù
+        stageNum = serializedObject.FindProperty("stageNumber");
+
+        // 1ì°¨ì› ë°°ì—´ë¡œ ë³€í™˜ëœ tiles ë°°ì—´ì— ì ‘ê·¼
         tileNum = serializedObject.FindProperty("tileNumbers");
         tileRotate = serializedObject.FindProperty("tileRotated");
-    }
+
+        player = serializedObject.FindProperty("playerPosition");
+}
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update(); // µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®
 
-        // 6x6 Å¸ÀÏ ÆíÁı UI
+        serializedObject.Update(); // ë°ì´í„° ì—…ë°ì´íŠ¸
+
+        base.OnInspectorGUI();
+
+        //EditorGUILayout.BeginHorizontal();
+        //stageNum.intValue = EditorGUILayout.IntField(stageNum.intValue, GUILayout.Width(40));
+        //EditorGUILayout.EndHorizontal();
+
+        // 6x6 íƒ€ì¼ í¸ì§‘ UI
         for (int x = 0; x < width; x++)
         {
+
             EditorGUILayout.BeginHorizontal();
             for (int y = 0; y < height; y++)
             {
-                // 2Â÷¿ø ¹è¿­ÀÇ ÀÎµ¦½º¸¦ 1Â÷¿ø ¹è¿­·Î º¯È¯
+                // 2ì°¨ì› ë°°ì—´ì˜ ì¸ë±ìŠ¤ë¥¼ 1ì°¨ì› ë°°ì—´ë¡œ ë³€í™˜
                 int index = x + (y * width);
 
-                // 1Â÷¿ø ¹è¿­ÀÇ ¿ä¼Ò¿¡ Á¢±Ù
+                // 1ì°¨ì› ë°°ì—´ì˜ ìš”ì†Œì— ì ‘ê·¼
                 SerializedProperty Num = tileNum.GetArrayElementAtIndex(index);
                 SerializedProperty Rotate = tileRotate.GetArrayElementAtIndex(index);
 
-                // ÀÎ½ºÆåÅÍ¿¡ Å¸ÀÏ ¹øÈ£¿Í È¸Àü ¿©ºÎ¸¦ Ç¥½ÃÇÏ°í ¼öÁ¤ °¡´ÉÇÏ°Ô ÇÔ
+                // ì¸ìŠ¤í™í„°ì— íƒ€ì¼ ë²ˆí˜¸ì™€ íšŒì „ ì—¬ë¶€ë¥¼ í‘œì‹œí•˜ê³  ìˆ˜ì • ê°€ëŠ¥í•˜ê²Œ í•¨
                 Num.intValue = EditorGUILayout.IntField(Num.intValue, GUILayout.Width(40));
                 Rotate.boolValue = EditorGUILayout.Toggle(Rotate.boolValue, GUILayout.Width(40));
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        // º¯°æ »çÇ× Àû¿ë
+        // ë³€ê²½ ì‚¬í•­ ì ìš©
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -12,7 +12,7 @@ public class TileRotate : MonoBehaviour
     
     void RotateAnimate(bool isRotate)
     {
-        //·ÎÅ×ÀÌ¼Ç ¾Ö´Ï¸ŞÀÌ¼Ç Áı¾î³ÖÀ» ¿¹Á¤, ÇöÀç´Â ¹Ù·Î È¸Àü
+        //ë¡œí…Œì´ì…˜ ì• ë‹ˆë©”ì´ì…˜ ì§‘ì–´ë„£ì„ ì˜ˆì •, í˜„ì¬ëŠ” ë°”ë¡œ íšŒì „
         transform.eulerAngles = new Vector3(0,0,(transform.eulerAngles.z + 180)%360);
     }
 }

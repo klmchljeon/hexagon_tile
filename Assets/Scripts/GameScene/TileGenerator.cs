@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileGenerator : MonoBehaviour
 {
     public GameObject[] tilePrefabs;
+    public GameObject candy;
 
     public GameObject tileParent;
 
@@ -18,7 +19,7 @@ public class TileGenerator : MonoBehaviour
         
     }
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update 
     void Start()
     {
         SpriteRenderer spriteRenderer = tilePrefabs[0].GetComponent<SpriteRenderer>();
@@ -48,7 +49,7 @@ public class TileGenerator : MonoBehaviour
             {
                 for (int y = 0; y < 6; y++)
                 {
-                    Vector3 position = CalculatePosition(x, y); // Å¸ÀÏÀÇ À§Ä¡ ¼³Á¤
+                    Vector3 position = CalculatePosition(x, y); // íƒ€ì¼ì˜ ìœ„ì¹˜ ì„¤ì •
                     int index = x + y * 6;
                     //Debug.Log($"{x} {y} {stageData.tileRotated[index]}");
                     GameObject tileObject = Instantiate(tilePrefabs[stageData.tileNumbers[index]], position, Quaternion.identity);
@@ -64,6 +65,15 @@ public class TileGenerator : MonoBehaviour
                     tileList[x,y] = tileObject;
                 }
             }
+
+            GameObject goalTile = tileList[(int)stageData.goalPosition.x, (int)stageData.goalPosition.y];
+            GameObject goalObject = Instantiate(candy, goalTile.transform);
+
+            Vector3 goalPosition = (Vector3)(goalTile.GetComponent<Tile>().objectPosition);
+            
+            goalObject.transform.localPosition = goalPosition;
+            goalObject.transform.localEulerAngles = new Vector3(0,0, (360 - goalTile.transform.eulerAngles.z)%360);
+            goalObject.GetComponent<FloatingItem>().startY = goalPosition.y;
         }
     }
 
