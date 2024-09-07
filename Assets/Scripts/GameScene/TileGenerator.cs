@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class TileGenerator : MonoBehaviour
@@ -14,6 +16,8 @@ public class TileGenerator : MonoBehaviour
 
     public GameObject player;
     public Vector2 playerIndex;
+
+    public int actionPoint;
 
     public GameObject tileParent;
 
@@ -94,7 +98,38 @@ public class TileGenerator : MonoBehaviour
             Vector3 playerPosition = (Vector3)(playerTile.GetComponent<Tile>().objectPosition);
 
             playerObject.transform.position = playerTile.transform.position + playerPosition;
+
+            int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 }};
+            int[] dy = { 1, 1, -1, -1 };
+
+            for (int x = 0; x < 6; x++)
+            {
+                for (int y = 0; y < 6; y++)
+                {
+                    Tile curTile = tileList[x, y].GetComponent<Tile>();
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int nx = x + dx[i, y % 2];
+                        int ny = y + dy[i];
+
+                        if (CheckRange(nx,ny))
+                        {
+                            curTile.adjacentTiles[i] = tileList[nx,ny].GetComponent<Tile>();
+                        }
+                    }
+
+                    curTile.UpdateCost();
+                }
+            }
+
+            actionPoint = stageData.actionPoint;
         }
+    }
+
+    bool CheckRange(int x, int y)
+    {
+        return 0 <= x && x < 6 && 0 <= y && y < 6;
     }
 
     void CalculateTileBounds()

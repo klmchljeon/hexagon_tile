@@ -10,8 +10,8 @@ public class Tile : MonoBehaviour
         topLeft, topRight, bottomLeft, bottomRight
     }
 
-    Tile[] adjacentTiles = new Tile[4];
-    int[] costs = new int[4];
+    public Tile[] adjacentTiles = new Tile[4];
+    public int[] costs = new int[4];
 
     public bool isRotate = false;
 
@@ -24,16 +24,16 @@ public class Tile : MonoBehaviour
         isRotate ^= true;
         objectPosition = -objectPosition;
         isRotateChanged?.Invoke(isRotate);
-        Update();
+        UpdateCost();
 
     }
 
     private void Start()
     {
-        Update();
+        UpdateCost();
     }
 
-    void Update()
+    public void UpdateCost()
     {
         for (int i = 0; i < adjacentTiles.Length; i++)
         {

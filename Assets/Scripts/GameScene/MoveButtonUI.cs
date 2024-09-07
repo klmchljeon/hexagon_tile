@@ -18,6 +18,8 @@ public class MoveButtonUI : MonoBehaviour
 
     void UpdateUI(int x, int y)
     {
+        GameObject curTile = gameManager.tileList[x, y];
+
         //LeftTop, RightTop, LeftBottom, RightBottom, Left, Right. Center
         int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 }, { -1, -1, }, { 1, 1 }, { 0, 0 } };
         int[] dy = { 1, 1, -1, -1, 0, 0, 0 };
@@ -29,9 +31,23 @@ public class MoveButtonUI : MonoBehaviour
 
             if (CheckRange(nx, ny))
             {
-                GameObject curTile = gameManager.tileList[nx, ny];
-                buttons[i].transform.eulerAngles = new Vector3(0, 0, curTile.transform.eulerAngles.z);
-                buttons[i].GetComponent<Image>().sprite = curTile.GetComponent<SpriteRenderer>().sprite;
+                buttons[i].SetActive(true);
+                GameObject nextTile = gameManager.tileList[nx, ny];
+                buttons[i].transform.eulerAngles = new Vector3(0, 0, nextTile.transform.eulerAngles.z);
+                buttons[i].GetComponent<Image>().sprite = nextTile.GetComponent<SpriteRenderer>().sprite;
+
+                if (i >= 4) continue;
+
+                int cost = curTile.GetComponent<Tile>().costs[i];
+
+                if (cost == -1 || cost > gameManager.actionPoint)                
+                {
+                    buttons[i].GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    buttons[i].GetComponent<Button>().interactable = true;
+                }
             }
             else
             {
