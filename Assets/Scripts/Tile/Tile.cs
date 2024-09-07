@@ -25,7 +25,6 @@ public class Tile : MonoBehaviour
         objectPosition = -objectPosition;
         isRotateChanged?.Invoke(isRotate);
         UpdateCost();
-
     }
 
     private void Start()
@@ -40,10 +39,11 @@ public class Tile : MonoBehaviour
             if (adjacentTiles[i] == null) continue;
 
             costs[i] = Calculate(adjacentTiles[i], i < 2);
+            adjacentTiles[i].costs[3 - i] = adjacentTiles[i].Calculate(this, 3 - i < 2);
         }
     }
 
-    int Calculate(Tile adjTile, bool isUpper)
+    public int Calculate(Tile adjTile, bool isUpper)
     {
         if (isRotate == adjTile.isRotate)
             return 2;

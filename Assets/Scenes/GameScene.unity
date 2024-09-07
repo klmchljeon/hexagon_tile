@@ -180,7 +180,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: dd25771b246218444ba58cc07e80511f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5176471}
   m_FlipX: 0
@@ -623,6 +623,7 @@ MonoBehaviour:
   goalIndex: {x: 0, y: 0}
   player: {fileID: 2892256410033003312, guid: 2a7f33d4ff1ac6b4696677b81ad3113a, type: 3}
   playerIndex: {x: 0, y: 0}
+  actionPoint: 0
   tileParent: {fileID: 90908858}
 --- !u!4 &819161726
 Transform:
@@ -1426,6 +1427,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileGen: {fileID: 819161725}
   playerPosition: {x: 0, y: 0}
+  goalPosition: {x: 0, y: 0}
+  actionPoint: 0
+  player: {fileID: 0}
+  buttons:
+  - {fileID: 1050008700}
+  - {fileID: 989067405}
+  - {fileID: 1332254350}
+  - {fileID: 1143661278}
 --- !u!1 &1858333157
 GameObject:
   m_ObjectHideFlags: 0

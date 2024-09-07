@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
 
     public event Action<int,int> UpdateUI;
 
+    private Camera mainCamera; 
+    private GameObject selectedObject = null; // 현재 선택된 오브젝트를 추적
+    private Vector3 originalScale; // 오브젝트의 원래 크기 저장
+    private TileRotate rotatingTile;
+
     private void Awake()
     {
         foreach (Button btn in buttons)
@@ -34,7 +39,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -44,6 +49,8 @@ public class GameManager : MonoBehaviour
         {
             tileList = tileGen.tileList;
             playerPosition = tileGen.playerIndex;
+            goalPosition = tileGen.goalIndex;
+
             actionPoint = tileGen.actionPoint;
             player = FindObjectOfType<PlayerMove>().gameObject;
 
@@ -53,9 +60,25 @@ public class GameManager : MonoBehaviour
 
         if (player.GetComponent<PlayerMove>().moveEnd)
         {
-            Debug.Log("이동 끝");
             UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
             player.GetComponent<PlayerMove>().moveEnd = false;
+
+            Debug.Log($"이동 끝 포인트: {actionPoint}");
+        }
+
+        if (rotatingTile != null && rotatingTile.RotateEnd)
+        {
+            //Debug.Log("회전 끝");
+            UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
+            rotatingTile.RotateEnd = false;
+            rotatingTile = null;
+
+            Debug.Log($"회전 끝 포인트: {actionPoint}");
+        }
+        
+        if (!player.GetComponent<PlayerMove>().moveFlag && rotatingTile == null)
+        {
+            SelectTile();
         }
     }
 
@@ -80,7 +103,7 @@ public class GameManager : MonoBehaviour
 
         if (playerMove.moveFlag) 
         {
-            Debug.Log("이동중");
+            //Debug.Log("이동중");
             return;
         }
 
@@ -105,5 +128,85 @@ public class GameManager : MonoBehaviour
 
         playerMove.moveFlag = true;
 
+    }
+
+    void SelectTile()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 마우스 위치에서 레이캐스트 시작
+            Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+            // Ray가 2D 콜라이더에 부딪혔는지 확인
+            if (hit.collider != null)
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+
+                if (clickedObject.name[0] != 'T') return;
+
+                int x = Int32.Parse(clickedObject.name[1].ToString());
+                int y = Int32.Parse(clickedObject.name[2].ToString());
+
+                Vector2 tileIndex = new Vector2(x, y);
+                if (tileIndex == playerPosition || tileIndex == goalPosition)
+                {
+                    ResetObjectSize();
+                    return;
+                }
+
+                // 이미 선택된 오브젝트를 다시 선택한 경우
+                if (selectedObject == clickedObject)
+                {
+                    PerformSecondaryAction(clickedObject); // 다시 선택 시 동작 수행
+                }
+                else
+                {
+                    // 새로운 오브젝트 선택 시
+                    if (selectedObject != null)
+                    {
+                        ResetObjectSize(); // 이전에 선택된 오브젝트의 크기를 원래대로 복구
+                    }
+
+                    SelectObject(clickedObject); // 새로운 오브젝트 선택
+                }
+            }
+            else
+            {
+                ResetObjectSize();
+            }
+        }
+    }
+
+    void SelectObject(GameObject obj)
+    {
+        selectedObject = obj;
+        originalScale = obj.transform.localScale; // 원래 크기 저장
+        obj.transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대
+        obj.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        //Debug.Log("Selected: " + obj.name);
+    }
+
+    void PerformSecondaryAction(GameObject obj)
+    {
+        //Debug.Log("Object " + obj.name + " was selected again!");
+        // 여기에 오브젝트를 다시 클릭했을 때 수행할 동작 추가
+        obj.GetComponent<Tile>().Rotate();
+        rotatingTile = obj.GetComponent<TileRotate>();
+        actionPoint -= 1;
+
+        ResetObjectSize();
+    }
+
+    // 오브젝트의 크기를 원래대로 복구
+    void ResetObjectSize()
+    {
+        if (selectedObject != null)
+        {
+            selectedObject.transform.localScale = originalScale;
+            selectedObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            //Debug.Log("Reset size of: " + selectedObject.name);
+            selectedObject = null;
+        }
     }
 }

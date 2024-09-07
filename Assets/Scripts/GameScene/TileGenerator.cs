@@ -73,7 +73,7 @@ public class TileGenerator : MonoBehaviour
                     }
 
                     tileObject.transform.SetParent(tileParent.transform);
-                    tileObject.name = $"tile {x} {y}";
+                    tileObject.name = $"T{x}{y}";
 
                     tileList[x,y] = tileObject;
                 }
