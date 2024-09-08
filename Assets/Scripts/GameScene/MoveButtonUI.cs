@@ -13,7 +13,16 @@ public class MoveButtonUI : MonoBehaviour
     private void Awake()
     {
         gameManager = GetComponent<GameManager>();
+    }
+
+    private void OnEnable()
+    {
         gameManager.UpdateUI += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        gameManager.UpdateUI -= UpdateUI;
     }
 
     void UpdateUI(int x, int y)

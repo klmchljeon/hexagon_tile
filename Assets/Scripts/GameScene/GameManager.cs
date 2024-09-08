@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Vector2 playerPosition;
     public Vector2 goalPosition;
     public int actionPoint;
+    public int candyCount = 1;
 
     public GameObject player;
     public GameObject goal;
@@ -35,11 +36,19 @@ public class GameManager : MonoBehaviour
     private float duration = 1.0f;
     private float time = 0;
 
-    private void Awake()
+    private void OnEnable()
     {
         foreach (Button btn in buttons)
         {
             btn.onClick.AddListener(() => MovePlayer(btn));
+        }
+    }
+
+    private void OnDisable()
+    {
+        foreach (Button btn in buttons)
+        {
+            btn.onClick.RemoveAllListeners();
         }
     }
 
@@ -71,6 +80,11 @@ public class GameManager : MonoBehaviour
 
         if (player.GetComponent<PlayerMove>().moveEnd)
         {
+            if (goalPosition == playerPosition)
+            {
+                candyCount--;
+            }
+
             UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
             player.GetComponent<PlayerMove>().moveEnd = false;
 

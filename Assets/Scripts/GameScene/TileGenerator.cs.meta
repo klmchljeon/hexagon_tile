@@ -3,7 +3,11 @@ guid: 021dd82f1948d6d4c9240d21252fcad1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - TestStage: {fileID: 11400000, guid: 59d5463e723adcc47a6110a774bbbb4b, type: 2}
+  - candy: {instanceID: 0}
+  - player: {instanceID: 0}
+  - tileParent: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
