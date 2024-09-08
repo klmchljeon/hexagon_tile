@@ -7,6 +7,7 @@ public class StageData : ScriptableObject
     public int stageNumber;
     public int[] tileNumbers = new int[36];
     public bool[] tileRotated = new bool[36];
+    public bool[] cantRotate = new bool[36];
 
     public int actionPoint;
 

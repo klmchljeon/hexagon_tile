@@ -244,6 +244,12 @@ public class GameManager : MonoBehaviour
 
     void SelectObject(GameObject obj)
     {
+        if (obj.GetComponent<Tile>().cantRotate)
+        {
+            Debug.Log("회전 불가능");
+            return;
+        }
+
         selectedObject = obj;
         originalScale = obj.transform.localScale; // 원래 크기 저장
         obj.transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대

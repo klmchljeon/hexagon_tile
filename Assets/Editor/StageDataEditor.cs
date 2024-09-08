@@ -7,6 +7,8 @@ public class StageDataEditor : Editor
     private SerializedProperty stageNum;
     private SerializedProperty tileNum;
     private SerializedProperty tileRotate;
+    private SerializedProperty cantRotate;
+
     private SerializedProperty player;
     private int width = 6;  // 2차원 배열의 가로 크기
     private int height = 6; // 2차원 배열의 세로 크기
@@ -18,6 +20,7 @@ public class StageDataEditor : Editor
         // 1차원 배열로 변환된 tiles 배열에 접근
         tileNum = serializedObject.FindProperty("tileNumbers");
         tileRotate = serializedObject.FindProperty("tileRotated");
+        cantRotate = serializedObject.FindProperty("cantRotate");
 
         player = serializedObject.FindProperty("playerPosition");
 }
@@ -46,10 +49,12 @@ public class StageDataEditor : Editor
                 // 1차원 배열의 요소에 접근
                 SerializedProperty Num = tileNum.GetArrayElementAtIndex(index);
                 SerializedProperty Rotate = tileRotate.GetArrayElementAtIndex(index);
+                SerializedProperty CantRotate = cantRotate.GetArrayElementAtIndex(index);
 
                 // 인스펙터에 타일 번호와 회전 여부를 표시하고 수정 가능하게 함
                 Num.intValue = EditorGUILayout.IntField(Num.intValue, GUILayout.Width(40));
-                Rotate.boolValue = EditorGUILayout.Toggle(Rotate.boolValue, GUILayout.Width(40));
+                Rotate.boolValue = EditorGUILayout.Toggle(Rotate.boolValue, GUILayout.Width(15));
+                CantRotate.boolValue = EditorGUILayout.Toggle(CantRotate.boolValue, GUILayout.Width(25));
             }
             EditorGUILayout.EndHorizontal();
         }

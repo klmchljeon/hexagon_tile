@@ -72,6 +72,12 @@ public class TileGenerator : MonoBehaviour
                         tileObject.GetComponent<Tile>().Rotate();
                     }
 
+                    if (stageData.cantRotate[index])
+                    {
+                        tileObject.GetComponent<Tile>().cantRotate = true;
+                        tileObject.GetComponent<SpriteRenderer>().color = new Color(190f / 255f, 190f / 255f, 190f / 255f, 1f);
+                    }
+
                     tileObject.transform.SetParent(tileParent.transform);
                     tileObject.name = $"T{x}{y}";
 

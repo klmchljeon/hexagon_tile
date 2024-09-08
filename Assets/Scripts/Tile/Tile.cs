@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    enum directions
-    {
-        topLeft, topRight, bottomLeft, bottomRight
-    }
-
     public Tile[] adjacentTiles = new Tile[4];
     public int[] costs = new int[4];
+
+    public bool cantRotate = false;
 
     public bool isRotate = false;
     float rotationAngle = 180f;
