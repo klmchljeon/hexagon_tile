@@ -14,16 +14,17 @@ public class Tile : MonoBehaviour
     public int[] costs = new int[4];
 
     public bool isRotate = false;
+    float rotationAngle = 180f;
 
     public Vector2 objectPosition;
 
-    public event Action<bool> isRotateChanged;
+    public event Action<float> isRotateChanged;
     
     public void Rotate()
     {
         isRotate ^= true;
         objectPosition = -objectPosition;
-        isRotateChanged?.Invoke(isRotate);
+        isRotateChanged?.Invoke(isRotate?(360f-rotationAngle):rotationAngle);
         UpdateCost();
     }
 

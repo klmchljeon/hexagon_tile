@@ -7,8 +7,7 @@ public class TileRotate : MonoBehaviour
     public bool isRotating = false; // 현재 회전 중인지 확인하는 플래그
     public bool RotateEnd = false;
     private float rotationDuration = 1.0f; // 회전 애니메이션 지속 시간
-
-    float targetAngle = 180f;
+    
     float startAngle;
     float endAngle;
     float elapsedTime;
@@ -28,10 +27,10 @@ public class TileRotate : MonoBehaviour
     }
 
     // 회전 애니메이션 실행
-    public void RotateAnimate(bool isRotate)
+    public void RotateAnimate(float targetAngle)
     {
         startAngle = transform.eulerAngles.z; // 현재 Z축의 시작 각도
-        endAngle = (startAngle + targetAngle) % 360; // 목표 각도 계산
+        endAngle = startAngle + targetAngle; // 목표 각도 계산
 
         elapsedTime = 0f; // 경과 시간 초기화
         isRotating = true;
@@ -47,7 +46,7 @@ public class TileRotate : MonoBehaviour
 
         if (elapsedTime > rotationDuration)
         {
-            transform.eulerAngles = new Vector3(0, 0, endAngle); // 정확한 목표 각도로 설정
+            transform.eulerAngles = new Vector3(0, 0, endAngle%360); // 정확한 목표 각도로 설정
             isRotating = false; // 회전 완료
             RotateEnd = true;
         }

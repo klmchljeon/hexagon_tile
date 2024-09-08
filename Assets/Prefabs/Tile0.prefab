@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: b0840825938a7ba4191bbaa3d873a8c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,6 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eee1353a4205a740982cd92a56f687f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adjacentTiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  costs: 00000000000000000000000000000000
   isRotate: 0
   objectPosition: {x: 0, y: 0.5}
 --- !u!114 &5623585218044560904
@@ -113,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d238d5382c95248aae659b756ea31c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRotating: 0
+  RotateEnd: 0
 --- !u!60 &7714511050581630055
 PolygonCollider2D:
   m_ObjectHideFlags: 0

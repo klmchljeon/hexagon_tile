@@ -220,7 +220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbd2bf8f02876f479a6714a2ecd4708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStageData: {fileID: 11400000, guid: a0107a1d81f21c643bf074fccbead9ea, type: 2}
+  stageDatas:
+  - {fileID: 11400000, guid: a0107a1d81f21c643bf074fccbead9ea, type: 2}
+  - {fileID: 11400000, guid: b9392ecf4fee1b542b286500e0f2ae45, type: 2}
+  stageIndex: 0
+  currentStageData: {fileID: 0}
 --- !u!4 &748071438
 Transform:
   m_ObjectHideFlags: 0
@@ -362,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd72e92aeaa88f46b767c17965cb97c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageData: {fileID: 11400000, guid: a0107a1d81f21c643bf074fccbead9ea, type: 2}
+  idx: 0
 --- !u!222 &987239953
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1044,7 +1048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd72e92aeaa88f46b767c17965cb97c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageData: {fileID: 11400000, guid: b9392ecf4fee1b542b286500e0f2ae45, type: 2}
+  idx: 1
 --- !u!222 &2093606010
 CanvasRenderer:
   m_ObjectHideFlags: 0

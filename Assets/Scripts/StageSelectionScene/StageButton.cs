@@ -4,7 +4,10 @@ using UnityEngine.UI;
 
 public class StageButton : MonoBehaviour
 {
-    public StageData stageData; // 버튼에 할당할 StageData
+    [SerializeField]
+    private int idx;
+
+    //public StageData stageData; // 버튼에 할당할 StageData
     Button button;       // 유니티의 버튼 컴포넌트
 
     private void Start()
@@ -18,7 +21,8 @@ public class StageButton : MonoBehaviour
     void OnStageButtonClick()
     {
         // 클릭된 버튼의 StageData를 StageManager에 저장
-        StageManager.Instance.currentStageData = stageData;
+        StageManager.Instance.stageIndex = idx;
+        StageManager.Instance.currentStageData = StageManager.Instance.stageDatas[idx];
 
         // 게임 씬으로 이동
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");

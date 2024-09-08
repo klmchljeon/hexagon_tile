@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
     private Vector3 originalScale; // 오브젝트의 원래 크기 저장
     private TileRotate rotatingTile;
 
+    public GameObject panel;
+    public GameObject layerMask;
+
+    private float duration = 1.0f;
+    private float time = 0;
+
     private void Awake()
     {
         foreach (Button btn in buttons)
@@ -48,6 +54,9 @@ public class GameManager : MonoBehaviour
     {
         if (firstUILoad)
         {
+            time += Time.deltaTime;
+            if (time < duration) return;
+
             tileList = tileGen.tileList;
             playerPosition = tileGen.playerIndex;
             goalPosition = tileGen.goalIndex;
@@ -88,25 +97,39 @@ public class GameManager : MonoBehaviour
 
     void GameEndCheck()
     {
+
         if (playerPosition == goalPosition)
         {
-            Clear();
+            panel.SetActive(true);
+            layerMask.SetActive(true);
+
+            GameObject clear = panel.transform.Find("Clear").gameObject;
+
+            goalPosition = new Vector2(-1,-1);
+            Clear(clear);
         }
         else if (actionPoint == 0)
         {
-            GameOver();
+            panel.SetActive(true);
+            layerMask.SetActive(true);
+
+            GameObject fail = panel.transform.Find("Fail").gameObject;
+
+            GameOver(fail);
         }
     }
 
-    void Clear()
+    void Clear(GameObject clear)
     {
         //사탕 획득 모션
         goal.GetComponent<FloatingItem>().isCollected = true;
+
+        clear.SetActive(true);
     }
 
-    void GameOver()
+    void GameOver(GameObject fail)
     {
-
+        fail.SetActive(true);
     }
 
     void MovePlayer(Button button)
@@ -163,7 +186,7 @@ public class GameManager : MonoBehaviour
         {
             // 마우스 위치에서 레이캐스트 시작
             Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 1f, ~LayerMask.GetMask("RaycastBlockingLayer"));
 
             // Ray가 2D 콜라이더에 부딪혔는지 확인
             if (hit.collider != null)
