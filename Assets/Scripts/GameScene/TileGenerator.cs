@@ -69,7 +69,7 @@ public class TileGenerator : MonoBehaviour
 
                     if (stageData.tileRotated[index])
                     {
-                        tileObject.GetComponent<Tile>().Rotate();
+                        tileObject.GetComponent<Tile>().FirstRotate();
                     }
 
                     if (stageData.cantRotate[index])

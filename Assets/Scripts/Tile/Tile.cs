@@ -16,6 +16,13 @@ public class Tile : MonoBehaviour
     public Vector2 objectPosition;
 
     public event Action<float> isRotateChanged;
+
+    public void FirstRotate()
+    {
+        isRotate = true;
+        objectPosition = -objectPosition;
+        transform.eulerAngles = new Vector3(0, 0, 360f - rotationAngle);
+    }
     
     public void Rotate()
     {

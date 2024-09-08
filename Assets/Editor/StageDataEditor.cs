@@ -23,7 +23,7 @@ public class StageDataEditor : Editor
         cantRotate = serializedObject.FindProperty("cantRotate");
 
         player = serializedObject.FindProperty("playerPosition");
-}
+    }
 
     public override void OnInspectorGUI()
     {
