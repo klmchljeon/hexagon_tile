@@ -5,17 +5,31 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    [SerializeField]
+    private float _rotationAngle = 180f;
+    protected virtual float rotationAngle
+    {
+        get { return _rotationAngle; }
+        set { _rotationAngle = value; }
+    }
+
+    [SerializeField]
+    private int _tileNum = 0;
+    public virtual int tileNum
+    {
+        get { return _tileNum; }
+        set { _tileNum = value; }
+    }
+
+
     public Tile[] adjacentTiles = new Tile[4];
     public int[] costs = new int[4];
 
     public bool cantRotate = false;
-
     public bool isRotate = false;
-    float rotationAngle = 180f;
+    public event Action<float> isRotateChanged;
 
     public Vector2 objectPosition;
-
-    public event Action<float> isRotateChanged;
 
     public void FirstRotate()
     {
@@ -43,23 +57,49 @@ public class Tile : MonoBehaviour
         {
             if (adjacentTiles[i] == null) continue;
 
-            costs[i] = Calculate(adjacentTiles[i], i < 2);
-            adjacentTiles[i].costs[3 - i] = adjacentTiles[i].Calculate(this, 3 - i < 2);
+            costs[i] = Calculate(adjacentTiles[i], i);
+            adjacentTiles[i].costs[3 - i] = adjacentTiles[i].Calculate(this, 3 - i);
         }
     }
 
-    public int Calculate(Tile adjTile, bool isUpper)
+    public virtual int Calculate(Tile adjTile, int index)
     {
-        if (isRotate == adjTile.isRotate)
-            return 2;
+        bool toUp = index < 2;
+        bool toLeft = index % 2 == 0;
 
-        if (isRotate != isUpper)
+        if (adjTile.tileNum == 0)
         {
-            return 1;
+            if (isRotate == adjTile.isRotate)
+            {
+                return 2;
+            }
+            else if (toUp != isRotate)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+
         }
-        else
+        else if (adjTile.tileNum == 1)
         {
-            return -1;
+            if (toUp == isRotate)
+            {
+                return -1;
+            }
+            else if (!adjTile.isRotate == (index == 1 || index == 2))
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
+
+        Debug.Log($"{tileNum}, {adjTile.tileNum} 간 정의 필요");
+        return -1;
     }
 }
