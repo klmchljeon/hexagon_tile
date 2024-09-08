@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class NextLevel : SceneChange
 {
-    protected override void SceneChangeFunc()
+    protected override void TransitionToScene()
     {
         if (StageManager.Instance.stageIndex == StageManager.Instance.stageDatas.Length - 1)
         {
@@ -15,6 +15,6 @@ public class NextLevel : SceneChange
 
         StageManager.Instance.currentStageData = StageManager.Instance.stageDatas[++StageManager.Instance.stageIndex];
 
-        base.SceneChangeFunc();
+        base.TransitionToScene();
     }
 }
