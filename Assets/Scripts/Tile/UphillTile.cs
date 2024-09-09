@@ -56,6 +56,64 @@ public class UphillTile : Tile
                 return -1;
             }
         }
+        else if (adjTile.tileNum == 2)
+        {
+            if (!isRotate && (index == 0 || index == 3))
+            {
+                return -1;
+            }
+            else if (isRotate && (index == 1 || index == 2))
+            {
+                return -1;
+            }
+            else
+            {
+                if (index == 1 || index == 2)
+                {
+                    return 1;
+                }
+                else
+                {
+                    if (toUp == adjTile.isRotate)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+        }
+        else if (adjTile.tileNum == 3)
+        {
+            if (!isRotate && (index == 0 || index == 3))
+            {
+                return -1;
+            }
+            else if (isRotate && (index == 1 || index == 2))
+            {
+                return -1;
+            }
+            else
+            {
+                if (index == 0 || index == 3)
+                {
+                    return 1;
+                }
+                else
+                {
+                    if (toUp == adjTile.isRotate)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+        }
 
         Debug.Log($"{tileNum}, {adjTile.tileNum} 간 정의 필요");
         return -1;

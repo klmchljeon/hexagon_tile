@@ -65,7 +65,7 @@ public class Tile : MonoBehaviour
     public virtual int Calculate(Tile adjTile, int index)
     {
         bool toUp = index < 2;
-        bool toLeft = index % 2 == 0;
+        //bool toLeft = index % 2 == 0;
 
         if (adjTile.tileNum == 0)
         {
@@ -96,6 +96,58 @@ public class Tile : MonoBehaviour
             else
             {
                 return -1;
+            }
+        }
+        else if (adjTile.tileNum == 2)
+        {
+            if (isRotate != adjTile.isRotate)
+            {
+                if (toUp == isRotate)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            else if (adjTile.isRotate && index == 2)
+            {
+                return 1;
+            }
+            else if (!adjTile.isRotate && index == 1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+        else if (adjTile.tileNum == 3)
+        {
+            if (isRotate != adjTile.isRotate)
+            {
+                if (toUp == isRotate)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            else if (adjTile.isRotate && index == 3)
+            {
+                return 1;
+            }
+            else if (!adjTile.isRotate && index == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
             }
         }
 
