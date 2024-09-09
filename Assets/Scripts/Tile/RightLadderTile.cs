@@ -20,7 +20,7 @@ public class RightLadderTile : Tile
         if (adjTile.tileNum == 0)
         {
             return adjTile.Calculate(this, 3 - index);
-            {
+            /*{
                 if (isRotate && index == 3)
                 {
                     if (!adjTile.isRotate)
@@ -58,12 +58,12 @@ public class RightLadderTile : Tile
                         return -1;
                     }
                 }
-            }
+            }*/
         }
         else if (adjTile.tileNum == 1)
         {
             return adjTile.Calculate(this, 3 - index);
-            {
+            /*{
                 if (isRotate && index == 3)
                 {
                     if (!adjTile.isRotate)
@@ -101,12 +101,12 @@ public class RightLadderTile : Tile
                         return -1;
                     }
                 }
-            }
+            }*/
         }
         else if (adjTile.tileNum == 2)
         {
             return adjTile.Calculate(this, 3 - index);
-            {
+            /*{
                 if (adjTile.isRotate && index == 2)
                 {
                     return 1;
@@ -127,7 +127,7 @@ public class RightLadderTile : Tile
                 {
                     return -1;
                 }
-            }
+            }*/
         }
         else if (adjTile.tileNum == 3)
         {

@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
             UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
             player.GetComponent<PlayerMove>().moveEnd = false;
 
+            SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true);
+
             GameEndCheck();
             Debug.Log($"이동 끝 포인트: {actionPoint}");
         }

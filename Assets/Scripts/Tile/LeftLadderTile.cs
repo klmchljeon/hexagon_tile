@@ -20,7 +20,7 @@ public class LeftLadderTile : Tile
         if (adjTile.tileNum == 0)
         {
             return adjTile.Calculate(this, 3 - index);
-            {
+            /*{
                 if (isRotate && index == 2)
                 {
                     if (!adjTile.isRotate)
@@ -58,12 +58,12 @@ public class LeftLadderTile : Tile
                         return -1;
                     }
                 }
-            }
+            }*/
         }
         else if (adjTile.tileNum == 1)
         {
             return adjTile.Calculate(this, 3 - index);
-            {
+            /*{
                 if (isRotate && index == 2)
                 {
                     if (!adjTile.isRotate)
@@ -101,7 +101,7 @@ public class LeftLadderTile : Tile
                         return -1;
                     }
                 }
-            }
+            }*/
         }
         else if (adjTile.tileNum == 2)
         {
