@@ -8,6 +8,8 @@ public class SoundManager : MonoBehaviour
     [Range(0f, 1f)] public float musicVolume = 1f;
     [Range(0f, 1f)] public float sfxVolume = 1f;
 
+    AudioSource bgm;
+
     private void Awake()
     {
         if (instance == null)
@@ -19,6 +21,16 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        bgm = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        bgm.volume = musicVolume * masterVolume;
     }
 
     public void SetMasterVolume(float volume)

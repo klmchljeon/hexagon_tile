@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
+        Slider[] allSliders = Resources.FindObjectsOfTypeAll<Slider>();
+
         // 슬라이더 초기값을 현재 사운드 매니저의 값으로 설정
         masterVolumeSlider.value = SoundManager.instance.masterVolume;
         musicVolumeSlider.value = SoundManager.instance.musicVolume;
