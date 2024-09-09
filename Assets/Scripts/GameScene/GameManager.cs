@@ -33,9 +33,6 @@ public class GameManager : MonoBehaviour
     public GameObject panel;
     public GameObject layerMask;
 
-    private float duration = 1.0f;
-    private float time = 0;
-
     private void OnEnable()
     {
         foreach (Button btn in buttons)
@@ -63,9 +60,6 @@ public class GameManager : MonoBehaviour
     {
         if (firstUILoad)
         {
-            time += Time.deltaTime;
-            if (time < duration) return;
-
             tileList = tileGen.tileList;
             playerPosition = tileGen.playerIndex;
             goalPosition = tileGen.goalIndex;
