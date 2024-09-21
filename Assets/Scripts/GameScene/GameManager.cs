@@ -192,11 +192,11 @@ public class GameManager : MonoBehaviour
 
     void SelectTile()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !layerMask.activeSelf)
         {
             // 마우스 위치에서 레이캐스트 시작
             Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 1f, ~LayerMask.GetMask("RaycastBlockingLayer"));
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 1f);
 
             // Ray가 2D 콜라이더에 부딪혔는지 확인
             if (hit.collider != null)

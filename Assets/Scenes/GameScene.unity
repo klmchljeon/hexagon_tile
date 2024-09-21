@@ -1301,6 +1301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 322325244}
   - component: {fileID: 322325243}
+  - component: {fileID: 322325246}
   - component: {fileID: 322325245}
   m_Layer: 0
   m_Name: "\uBC30\uACBD (1)"
@@ -1421,6 +1422,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.31, y: 4.26}
   m_EdgeRadius: 0
+--- !u!114 &322325246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322325242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa426d547728a0143aba8beafe8fc207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 322325242}
 --- !u!1 &334615991
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,7 +2844,6 @@ GameObject:
   - component: {fileID: 742253743}
   - component: {fileID: 742253746}
   - component: {fileID: 742253745}
-  - component: {fileID: 742253747}
   - component: {fileID: 742253744}
   m_Layer: 5
   m_Name: ExitButton
@@ -2903,7 +2916,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 742253747}
+      - m_Target: {fileID: 1179986413}
+        m_TargetAssemblyTypeName: ToggleObject, Assembly-CSharp
+        m_MethodName: ToggleActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 322325246}
         m_TargetAssemblyTypeName: ToggleObject, Assembly-CSharp
         m_MethodName: ToggleActive
         m_Mode: 1
@@ -2953,19 +2978,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742253742}
   m_CullTransparentMesh: 1
---- !u!114 &742253747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742253742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa426d547728a0143aba8beafe8fc207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetObject: {fileID: 1179986409}
 --- !u!1 &764027000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5495,6 +5507,7 @@ GameObject:
   - component: {fileID: 1179986410}
   - component: {fileID: 1179986412}
   - component: {fileID: 1179986411}
+  - component: {fileID: 1179986413}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -5562,6 +5575,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179986409}
   m_CullTransparentMesh: 1
+--- !u!114 &1179986413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179986409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa426d547728a0143aba8beafe8fc207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 1179986409}
 --- !u!1 &1222068221
 GameObject:
   m_ObjectHideFlags: 0
