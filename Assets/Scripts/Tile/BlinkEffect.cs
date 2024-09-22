@@ -8,11 +8,14 @@ public class BlinkEffect : MonoBehaviour
     private bool fadingOut = true;
     public float fadeSpeed = 0.6f;
 
-    void Start()
+    void OnEnable()
     {
         rend = GetComponent<Renderer>();
         color = rend.material.color;
         alpha = 80f / 255f;
+
+        color.a = alpha;
+        rend.material.color = color;
     }
 
     void Update()
