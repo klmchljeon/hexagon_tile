@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationAngle: 180
   _tileNum: 10
+  isMovable: 0
+  MovableEffect: {fileID: 2694638711878664184, guid: 72bde180a373714448c806e7d586b1cb, type: 3}
   adjacentTiles:
   - {fileID: 0}
   - {fileID: 0}

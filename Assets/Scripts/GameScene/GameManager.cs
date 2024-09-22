@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
@@ -27,27 +28,15 @@ public class GameManager : MonoBehaviour
 
     private Camera mainCamera; 
     private GameObject selectedObject = null; // 현재 선택된 오브젝트를 추적
+    private GameObject[] adjactTileList = new GameObject[4];
+
+    private string selectedObjectType = null;
+
     private Vector3 originalScale; // 오브젝트의 원래 크기 저장
     private TileRotate rotatingTile;
 
     public GameObject panel;
     public GameObject layerMask;
-
-    private void OnEnable()
-    {
-        foreach (Button btn in buttons)
-        {
-            btn.onClick.AddListener(() => MovePlayer(btn));
-        }
-    }
-
-    private void OnDisable()
-    {
-        foreach (Button btn in buttons)
-        {
-            btn.onClick.RemoveAllListeners();
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -142,20 +131,20 @@ public class GameManager : MonoBehaviour
         fail.SetActive(true);
     }
 
-    void MovePlayer(Button button)
+    void MovePlayer(GameObject moveTile, Vector2 nextPosition)
     {
         int idx = -1;
-        for (int i = 0; i < buttons.Length; i++)
+        for (int i = 0; i < adjactTileList.Length; i++)
         {
-            if (buttons[i] == button)
+            if (adjactTileList[i] == moveTile)
             {
-                idx = i; break;
+                idx = i;
+                break;
             }
         }
 
         if (idx == -1)
         {
-            Debug.Log("fail");
             return;
         }
 
@@ -167,14 +156,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 } };
-        int[] dy = { 1, 1, -1, -1 };
-
         int x = (int)playerPosition.x;
         int y = (int)playerPosition.y;
 
-        int nx = x + dx[idx, y%2];
-        int ny = y + dy[idx];
+        int nx = (int)nextPosition.x;
+        int ny = (int)nextPosition.y;
         
         playerPosition = new Vector2(nx, ny);
 
@@ -194,66 +180,100 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !layerMask.activeSelf)
         {
-            // 마우스 위치에서 레이캐스트 시작
             Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 1f);
 
-            // Ray가 2D 콜라이더에 부딪혔는지 확인
             if (hit.collider != null)
             {
                 GameObject clickedObject = hit.collider.gameObject;
 
-                if (clickedObject.name[0] != 'T') return;
+                if (clickedObject.name[0] != 'T') 
+                {
+                    ResetObjectSelection();
+                    return;
+                }
 
                 int x = Int32.Parse(clickedObject.name[1].ToString());
                 int y = Int32.Parse(clickedObject.name[2].ToString());
 
                 Vector2 tileIndex = new Vector2(x, y);
-                if (tileIndex == playerPosition || tileIndex == goalPosition)
+                
+                // 인접한 타일을 누른 경우
+                if (adjactTileList.Contains(clickedObject))
                 {
-                    ResetObjectSize();
+                    MovePlayer(clickedObject, tileIndex);
+                    ResetObjectSelection();
                     return;
                 }
+                
+                if (tileIndex == goalPosition)
+                {
+                    ResetObjectSelection();
+                    return;
+                }
+
 
                 // 이미 선택된 오브젝트를 다시 선택한 경우
                 if (selectedObject == clickedObject)
                 {
-                    PerformSecondaryAction(clickedObject); // 다시 선택 시 동작 수행
+                    if (selectedObjectType == "Tile")
+                    {
+                        PerformSecondaryActionTile(clickedObject); // 다시 선택 시 동작 수행
+                    }
                 }
                 else
                 {
                     // 새로운 오브젝트 선택 시
-                    if (selectedObject != null)
+                    if (selectedObjectType != null)
                     {
-                        ResetObjectSize(); // 이전에 선택된 오브젝트의 크기를 원래대로 복구
+                        ResetObjectSelection(); // 이전에 선택된 오브젝트의 크기를 원래대로 복구
                     }
 
-                    SelectObject(clickedObject); // 새로운 오브젝트 선택
+                    SelectObject(clickedObject, tileIndex); // 새로운 오브젝트 선택
                 }
             }
             else
             {
-                ResetObjectSize();
+                ResetObjectSelection();
             }
         }
     }
 
-    void SelectObject(GameObject obj)
+    void SelectObject(GameObject obj, Vector2 tileIndex)
     {
-        if (obj.GetComponent<Tile>().cantRotate)
+        if (tileIndex == playerPosition)
         {
-            Debug.Log("회전 불가능");
-            return;
-        }
+            selectedObject = player;
+            selectedObjectType = "Player";
 
-        selectedObject = obj;
-        originalScale = obj.transform.localScale; // 원래 크기 저장
-        obj.transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대
-        obj.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        //Debug.Log("Selected: " + obj.name);
+            Tile tile = obj.GetComponent<Tile>();
+            for (int i = 0; i < adjactTileList.Length; i++)
+            {
+                if (tile.costs[i] == -1) continue;
+
+                adjactTileList[i] = tile.adjacentTiles[i].gameObject;
+                tile.adjacentTiles[i].MovableSelect();
+                Debug.Log("선택");
+            }
+        }
+        else
+        {
+            if (obj.GetComponent<Tile>().cantRotate)
+            {
+                Debug.Log("회전 불가능");
+                return;
+            }
+
+            selectedObject = obj;
+            selectedObjectType = "Tile";
+
+            originalScale = obj.transform.localScale; // 원래 크기 저장
+            obj.transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대
+            obj.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
     }
 
-    void PerformSecondaryAction(GameObject obj)
+    void PerformSecondaryActionTile(GameObject obj)
     {
         //Debug.Log("Object " + obj.name + " was selected again!");
         // 여기에 오브젝트를 다시 클릭했을 때 수행할 동작 추가
@@ -262,18 +282,31 @@ public class GameManager : MonoBehaviour
         rotatingTile.RotateEnd = false;
         actionPoint -= 1;
 
-        ResetObjectSize();
+        ResetObjectSelection();
     }
 
     // 오브젝트의 크기를 원래대로 복구
-    void ResetObjectSize()
+    void ResetObjectSelection()
     {
         if (selectedObject != null)
         {
-            selectedObject.transform.localScale = originalScale;
-            selectedObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            //Debug.Log("Reset size of: " + selectedObject.name);
+            if (selectedObjectType == "Tile")
+            {
+                selectedObject.transform.localScale = originalScale;
+                selectedObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            }
+            else if (selectedObjectType == "Player")
+            {
+                for (int i = 0; i < adjactTileList.Length; i++)
+                {
+                    if (adjactTileList[i] != null)
+                        adjactTileList[i].GetComponent<Tile>().ResetSelect();
+                    adjactTileList[i] = null;
+                }
+            }
+
             selectedObject = null;
+            selectedObjectType = null;
         }
     }
 }

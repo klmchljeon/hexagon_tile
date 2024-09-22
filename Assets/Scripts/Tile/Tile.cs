@@ -21,6 +21,9 @@ public class Tile : MonoBehaviour
         set { _tileNum = value; }
     }
 
+    public bool isMovable = false;
+    public GameObject MovableEffect;
+    GameObject effectInstance;
 
     public Tile[] adjacentTiles = new Tile[4];
     public int[] costs = new int[4];
@@ -51,6 +54,22 @@ public class Tile : MonoBehaviour
         UpdateCost();
     }
 
+    private void Update()
+    {
+
+    }
+
+    public void MovableSelect()
+    {
+        isMovable = true;
+        effectInstance = Instantiate(MovableEffect, transform);
+    }
+    public void ResetSelect()
+    {
+        isMovable = false;
+        Destroy(effectInstance);
+    }
+
     public void UpdateCost()
     {
         for (int i = 0; i < adjacentTiles.Length; i++)
@@ -61,6 +80,7 @@ public class Tile : MonoBehaviour
             adjacentTiles[i].costs[3 - i] = adjacentTiles[i].Calculate(this, 3 - i);
         }
     }
+
 
     public virtual int Calculate(Tile adjTile, int index)
     {
