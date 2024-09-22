@@ -250,6 +250,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < adjactTileList.Length; i++)
             {
                 if (tile.costs[i] == -1) continue;
+                if (tile.costs[i] > actionPoint) continue;
 
                 adjactTileList[i] = tile.adjacentTiles[i].gameObject;
                 tile.adjacentTiles[i].MovableSelect();
