@@ -252,6 +252,8 @@ public class GameManager : MonoBehaviour
                 if (tile.costs[i] == -1) continue;
                 if (tile.costs[i] > actionPoint) continue;
 
+                if (tile.adjacentTiles[i] == null) continue;
+
                 adjactTileList[i] = tile.adjacentTiles[i].gameObject;
                 tile.adjacentTiles[i].MovableSelect();
                 Debug.Log("선택");
