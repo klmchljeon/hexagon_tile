@@ -25,6 +25,9 @@ public class TileGenerator : MonoBehaviour
 
     public GameObject[,] tileList = new GameObject[6,6];
 
+    [SerializeField]
+    public Vector3 offset;
+
     private void Awake()
     {
         
@@ -61,7 +64,7 @@ public class TileGenerator : MonoBehaviour
             {
                 for (int y = 0; y < 6; y++)
                 {
-                    Vector3 position = CalculatePosition(x, y); // 타일의 위치 설정
+                    Vector3 position = CalculatePosition(x, y, offset); // 타일의 위치 설정
                     int index = x + y * 6;
                     //Debug.Log($"{x} {y} {stageData.tileRotated[index]}");
                     GameObject tileObject = Instantiate(tilePrefabs[stageData.tileNumbers[index]], position, Quaternion.identity);
@@ -146,7 +149,7 @@ public class TileGenerator : MonoBehaviour
         tileHeight = spriteSize.y;
     }
 
-    Vector3 CalculatePosition(int x, int y)
+    Vector3 CalculatePosition(int x, int y, Vector3 offset)
     {
         Vector3 res = new Vector3(-3 * tileWidth, -2.5f * tileHeight * 0.74f, 0);
 
@@ -159,6 +162,6 @@ public class TileGenerator : MonoBehaviour
             res += new Vector3((x+0.5f) * tileWidth, y * tileHeight * 0.74f, 0);
         }
 
-        return res;
+        return res + offset;
     }
 }
