@@ -73,7 +73,9 @@ public class GameManager : MonoBehaviour
 
             SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true);
 
-            GameEndCheck();
+            if (!GameEndCheck())
+                ReSelect(playerPosition);
+
             Debug.Log($"이동 끝 포인트: {actionPoint}");
         }
 
@@ -94,9 +96,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void GameEndCheck()
+    bool GameEndCheck()
     {
-
+        bool flag = false;
         if (playerPosition == goalPosition)
         {
             panel.SetActive(true);
@@ -106,6 +108,7 @@ public class GameManager : MonoBehaviour
 
             goalPosition = new Vector2(-1,-1);
             Clear(clear);
+            flag = true;
         }
         else if (actionPoint == 0)
         {
@@ -115,7 +118,10 @@ public class GameManager : MonoBehaviour
             GameObject fail = panel.transform.Find("Fail").gameObject;
 
             GameOver(fail);
+            flag = true;
         }
+
+        return flag;
     }
 
     void Clear(GameObject clear)
@@ -239,6 +245,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ReSelect(Vector2 tileIndex)
+    {
+        GameObject obj = tileList[(int)tileIndex.x, (int)tileIndex.y];
+        SelectObject(obj, tileIndex);
+    }
+
     void SelectObject(GameObject obj, Vector2 tileIndex)
     {
         if (tileIndex == playerPosition)
@@ -264,6 +276,10 @@ public class GameManager : MonoBehaviour
             if (obj.GetComponent<Tile>().cantRotate)
             {
                 Debug.Log("회전 불가능");
+                if (obj.GetComponent<ShakeEffect>() != null)
+                {
+                    obj.GetComponent<ShakeEffect>().Shake();
+                }
                 return;
             }
 

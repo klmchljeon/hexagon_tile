@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7348266370960580433}
   - component: {fileID: -2756837384295394360}
   - component: {fileID: 5623585218044560904}
+  - component: {fileID: -7212812461521828888}
   - component: {fileID: 7714511050581630055}
   m_Layer: 0
   m_Name: Tile1
@@ -102,7 +103,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationAngle: 300
   _tileNum: 1
-  isMovable: 0
   MovableEffect: {fileID: 8185636625525826335}
   adjacentTiles:
   - {fileID: 0}
@@ -129,6 +129,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRotating: 0
   RotateEnd: 0
+--- !u!114 &-7212812461521828888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470625918454353094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5082e1a3d9be5ea439df0f6424c4c37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.2
+  shakeMagnitude: 0.05
 --- !u!60 &7714511050581630055
 PolygonCollider2D:
   m_ObjectHideFlags: 0
