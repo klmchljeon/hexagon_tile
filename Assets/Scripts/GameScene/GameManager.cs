@@ -73,9 +73,8 @@ public class GameManager : MonoBehaviour
 
             SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true);
 
-            if (!GameEndCheck())
-                ReSelect(playerPosition);
-
+            ReSelect(playerPosition);
+            GameEndCheck();
             Debug.Log($"이동 끝 포인트: {actionPoint}");
         }
 
@@ -96,7 +95,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    bool GameEndCheck()
+    void GameEndCheck()
     {
         bool flag = false;
         if (playerPosition == goalPosition)
@@ -121,7 +120,10 @@ public class GameManager : MonoBehaviour
             flag = true;
         }
 
-        return flag;
+        if (flag)
+        {
+            ResetObjectSelection();
+        }
     }
 
     void Clear(GameObject clear)

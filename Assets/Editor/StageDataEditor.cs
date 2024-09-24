@@ -37,12 +37,17 @@ public class StageDataEditor : Editor
         //EditorGUILayout.EndHorizontal();
 
         // 6x6 타일 편집 UI
-        for (int x = 0; x < width; x++)
+        for (int y = height-1; y >= 0; y--)
         {
-
             EditorGUILayout.BeginHorizontal();
-            for (int y = 0; y < height; y++)
+            if (y % 2 == 1)
             {
+                GUILayout.Space(40);
+            }
+            for (int x = 0; x < width; x++)
+            {
+
+
                 // 2차원 배열의 인덱스를 1차원 배열로 변환
                 int index = x + (y * width);
 
