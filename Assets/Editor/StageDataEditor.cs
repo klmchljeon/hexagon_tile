@@ -1,4 +1,4 @@
-using UnityEditor;
+/*using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(StageData))]
@@ -68,3 +68,4 @@ public class StageDataEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+*/

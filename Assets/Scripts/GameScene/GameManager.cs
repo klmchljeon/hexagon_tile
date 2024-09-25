@@ -10,7 +10,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public TileGenerator tileGen;
+
+    [SerializeField]
+    private TileGenerator tileGen;
 
     public GameObject[,] tileList;
     public Vector2 playerPosition;
@@ -38,6 +40,20 @@ public class GameManager : MonoBehaviour
     public GameObject panel;
     public GameObject layerMask;
 
+    public static GameManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,11 +63,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!tileGen.isLoaded) return;
+
         if (firstUILoad)
         {
             tileList = tileGen.tileList;
-            playerPosition = tileGen.playerIndex;
-            goalPosition = tileGen.goalIndex;
+            //playerPosition = tileGen.playerIndex;
+            //goalPosition = tileGen.goalIndex;
 
             actionPoint = tileGen.actionPoint;
             player = FindObjectOfType<PlayerMove>().gameObject;

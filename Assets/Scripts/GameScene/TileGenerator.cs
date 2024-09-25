@@ -5,45 +5,33 @@ using UnityEngine;
 
 public class TileGenerator : MonoBehaviour
 {
-    [SerializeField]
-    private StageData TestStage;
+    [SerializeField] private StageData TestStage;
 
-    public GameObject[] tilePrefabs;
-    
-    public GameObject candy;
-    public Vector2 goalIndex;
+    [SerializeField] private GameObject[] tilePrefabs;
+    [SerializeField] private GameObject[] playerPrefabs;
+    [SerializeField] private GameObject[] candyPrefabs;
 
-    public GameObject player;
-    public Vector2 playerIndex;
+    [SerializeField] private GameObject tileParent;
+    [SerializeField] private GameObject playerParent;
+    [SerializeField] private GameObject candyParent;
 
+    [SerializeField] private Vector3 offset;
+
+    private float tileWidth;
+    private float tileHeight;
+
+    public GameObject[,] tileList = new GameObject[6, 6];
+    public GameObject[] playerList = new GameObject[5];
+    public GameObject[] candyList = new GameObject[5];
     public int actionPoint;
 
-    public GameObject tileParent;
+    public bool isLoaded = false;
 
-    float tileWidth = 0f;
-    float tileHeight = 0f;
-
-    public GameObject[,] tileList = new GameObject[6,6];
-
-    [SerializeField]
-    public Vector3 offset;
-
-    private void Awake()
-    {
-        
-    }
-
-    // Start is called before the first frame update 
     void Start()
     {
         CalculateTileBounds();
         SetupStage();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        isLoaded = true;
     }
 
     void SetupStage()
@@ -66,15 +54,16 @@ public class TileGenerator : MonoBehaviour
                 {
                     Vector3 position = CalculatePosition(x, y, offset); // 타일의 위치 설정
                     int index = x + y * 6;
-                    //Debug.Log($"{x} {y} {stageData.tileRotated[index]}");
-                    GameObject tileObject = Instantiate(tilePrefabs[stageData.tileNumbers[index]], position, Quaternion.identity);
+                    TileInfo tileInfo = stageData.tileInfos[index];
 
-                    if (stageData.tileRotated[index])
+                    GameObject tileObject = Instantiate(tilePrefabs[tileInfo.tileNum], position, Quaternion.identity);
+
+                    if (tileInfo.isRotate)
                     {
                         tileObject.GetComponent<Tile>().FirstRotate();
                     }
 
-                    if (stageData.cantRotate[index])
+                    if (tileInfo.cantRotate)
                     {
                         tileObject.GetComponent<Tile>().cantRotate = true;
                         tileObject.GetComponent<SpriteRenderer>().color = new Color(190f / 255f, 190f / 255f, 190f / 255f, 1f);
@@ -87,25 +76,36 @@ public class TileGenerator : MonoBehaviour
                 }
             }
 
-            goalIndex = new Vector2(stageData.goalPosition.x, stageData.goalPosition.y);
+            for (int i = 0; i < 5; i++)
+            {
+                PlayerInfo playerInfo = stageData.playerInfos[i];
+                if (playerInfo == null) break;
+                
+                (int, int) loc = playerInfo.loc;
+                GameObject playerTile = tileList[loc.Item1, loc.Item2];
+                GameObject playerObject = Instantiate(playerPrefabs[playerInfo.color]);
 
-            GameObject goalTile = tileList[(int)goalIndex.x, (int)goalIndex.y];
-            GameObject goalObject = Instantiate(candy);
+                Vector3 playerPosition = (Vector3)(playerTile.GetComponent<Tile>().objectPosition);
+                
+                playerObject.transform.position = playerTile.transform.position + playerPosition;
+                playerObject.transform.SetParent(playerParent.transform, true);
 
-            Vector3 goalPosition = (Vector3)(goalTile.GetComponent<Tile>().objectPosition);
-            
-            goalObject.transform.position = goalTile.transform.position + goalPosition;
-            goalObject.GetComponent<FloatingItem>().startY = goalPosition.y;
-            //
+            }
 
-            playerIndex = new Vector2(stageData.playerPosition.x, stageData.playerPosition.y);
+            for (int i = 0; i < 5; i++)
+            {
+                CandyInfo candyInfo = stageData.candyInfos[i];
+                if (candyInfo == null) break;
 
-            GameObject playerTile = tileList[(int)playerIndex.x, (int)playerIndex.y];
-            GameObject playerObject = Instantiate(player);
+                (int, int) loc = candyInfo.loc;
+                GameObject candyTile = tileList[loc.Item1, loc.Item2];
+                GameObject candyObject = Instantiate(candyPrefabs[candyInfo.color]);
 
-            Vector3 playerPosition = (Vector3)(playerTile.GetComponent<Tile>().objectPosition);
+                Vector3 candyPosition = (Vector3)(candyTile.GetComponent<Tile>().objectPosition);
 
-            playerObject.transform.position = playerTile.transform.position + playerPosition;
+                candyObject.transform.position = candyTile.transform.position + candyPosition;
+                candyObject.transform.SetParent(candyParent.transform, true);
+            }
 
             int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 }};
             int[] dy = { 1, 1, -1, -1 };
@@ -126,11 +126,9 @@ public class TileGenerator : MonoBehaviour
                             curTile.adjacentTiles[i] = tileList[nx,ny].GetComponent<Tile>();
                         }
                     }
-
                     curTile.UpdateCost();
                 }
             }
-
             actionPoint = stageData.actionPoint;
         }
     }
