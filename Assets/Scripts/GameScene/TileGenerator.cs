@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -24,14 +25,15 @@ public class TileGenerator : MonoBehaviour
     public GameObject[] playerList = new GameObject[5];
     public GameObject[] candyList = new GameObject[5];
     public int actionPoint;
+    public int stageNum;
 
-    public bool isLoaded = false;
+    public event Action isLoaded;
 
     void Start()
     {
         CalculateTileBounds();
         SetupStage();
-        isLoaded = true;
+        isLoaded?.Invoke();
     }
 
     void SetupStage()
@@ -89,6 +91,7 @@ public class TileGenerator : MonoBehaviour
                 
                 playerObject.transform.position = playerTile.transform.position + playerPosition;
                 playerObject.transform.SetParent(playerParent.transform, true);
+                playerObject.name = $"P{i}";
 
             }
 
@@ -105,6 +108,7 @@ public class TileGenerator : MonoBehaviour
 
                 candyObject.transform.position = candyTile.transform.position + candyPosition;
                 candyObject.transform.SetParent(candyParent.transform, true);
+                candyObject.name = $"C{i}";
             }
 
             int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 }};
@@ -130,6 +134,7 @@ public class TileGenerator : MonoBehaviour
                 }
             }
             actionPoint = stageData.actionPoint;
+            stageNum = stageData.stageNumber;
         }
     }
 

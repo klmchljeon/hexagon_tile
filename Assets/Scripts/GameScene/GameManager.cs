@@ -14,21 +14,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TileGenerator tileGen;
 
-    public GameObject[,] tileList;
-    public Vector2 playerPosition;
-    public Vector2 goalPosition;
+    public GameObject[,] tileList = new GameObject[6, 6];
+    public GameObject[] playerList = new GameObject[5];
+    public GameObject[] candyList = new GameObject[5];
     public int actionPoint;
-    public int candyCount = 1;
+    public int stageNum;
 
-    public GameObject player;
-    public GameObject goal;
+    public int playerCount;
+    public int candyCount;
 
-    public Button[] buttons;
-    private bool firstUILoad = true;
+    public event Action UpdateUI;
 
-    public event Action<int,int> UpdateUI;
+    private bool isMoving = false;
+    private bool isRotating = false;
 
-    private Camera mainCamera; 
     private GameObject selectedObject = null; // 현재 선택된 오브젝트를 추적
     private GameObject[] adjactTileList = new GameObject[4];
 
@@ -52,32 +51,66 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        tileGen.isLoaded += FirstInfoUpdate;
+        EventBus.OnMoveStart += MoveStart;
+        EventBus.OnMoveComplete += MoveComplete;
+        EventBus.OnRotateStart += RotateStart;
+        EventBus.OnRotateComplete += RotateComplete;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnDestroy()
     {
-        mainCamera = Camera.main;
+        tileGen.isLoaded -= FirstInfoUpdate;
+        EventBus.OnMoveStart -= MoveStart;
+        EventBus.OnMoveComplete -= MoveComplete;
+        EventBus.OnRotateStart -= RotateStart;
+        EventBus.OnRotateComplete -= RotateComplete;
     }
 
-    // Update is called once per frame
+    void FirstInfoUpdate()
+    {
+        stageNum = tileGen.stageNum;
+        tileList = tileGen.tileList;
+        playerList = tileGen.playerList;
+        candyList = tileGen.candyList;
+        actionPoint = tileGen.actionPoint;
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerList[i] != null) playerCount++;
+            if (candyList[i] != null) candyCount++;
+        }
+
+        UpdateUI?.Invoke();
+        tileGen.isLoaded -= FirstInfoUpdate;
+    }
+
+    void MoveStart()
+    {
+        isMoving = true;
+    }
+
+    void MoveComplete()
+    {
+        isMoving = false;
+
+        UpdateUI?.Invoke();
+    }
+
+    void RotateStart()
+    {
+        isRotating = true;
+    }
+
+    void RotateComplete()
+    {
+        isRotating = false;
+
+        UpdateUI?.Invoke();
+    }
+
     void Update()
     {
-        if (!tileGen.isLoaded) return;
-
-        if (firstUILoad)
-        {
-            tileList = tileGen.tileList;
-            //playerPosition = tileGen.playerIndex;
-            //goalPosition = tileGen.goalIndex;
-
-            actionPoint = tileGen.actionPoint;
-            player = FindObjectOfType<PlayerMove>().gameObject;
-            goal = FindObjectOfType<Goal>().gameObject;
-
-            UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
-            firstUILoad = false;
-        }
 
         if (player.GetComponent<PlayerMove>().moveEnd)
         {
@@ -86,7 +119,7 @@ public class GameManager : MonoBehaviour
                 candyCount--;
             }
 
-            UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
+            UpdateUI?.Invoke();
             player.GetComponent<PlayerMove>().moveEnd = false;
 
             SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true);
