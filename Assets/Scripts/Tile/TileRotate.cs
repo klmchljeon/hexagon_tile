@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TileRotate : MonoBehaviour
 {
+    int cost;
+
     public bool isRotating = false; // 현재 회전 중인지 확인하는 플래그
     private float rotationDuration = 1.0f; // 회전 애니메이션 지속 시간
     
@@ -34,13 +36,15 @@ public class TileRotate : MonoBehaviour
     }
 
     // 회전 애니메이션 실행
-    public void RotateAnimate(float targetAngle)
+    public void RotateAnimate(float targetAngle, bool isUndo)
     {
         startAngle = transform.eulerAngles.z; // 현재 Z축의 시작 각도
         endAngle = startAngle + targetAngle; // 목표 각도 계산
 
         elapsedTime = 0f; // 경과 시간 초기화
         isRotating = true;
+
+        cost = isUndo ? -tile.rotateCost : tile.rotateCost;
         //StartCoroutine(RotateTile(180));
     }
 
@@ -55,7 +59,7 @@ public class TileRotate : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 0, endAngle%360); // 정확한 목표 각도로 설정
             isRotating = false; // 회전 완료
-            EventBus.RotateComplete(tile.loc, tile.rotateCost);
+            EventBus.RotateComplete(tile.loc, cost);
         }
     }
 }

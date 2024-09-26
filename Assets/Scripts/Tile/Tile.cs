@@ -41,7 +41,7 @@ public class Tile : MonoBehaviour
     public int rotateCost = 1; 
 
     //event
-    public event Action<float> isRotateChanged;
+    public event Action<float, bool> isRotateChanged;
 
     //etc
     public Vector2 objectPosition;
@@ -54,13 +54,13 @@ public class Tile : MonoBehaviour
         transform.eulerAngles = new Vector3(0, 0, 360f - rotationAngle);
     }
     
-    public void Rotate((int,int) loc)
+    public void Rotate((int,int) loc, bool isUndo)
     {
         if (loc != this.loc) return;
 
         isRotate ^= true;
         objectPosition = -objectPosition;
-        isRotateChanged?.Invoke(isRotate?(360f-rotationAngle):rotationAngle);
+        isRotateChanged?.Invoke(isRotate?(360f-rotationAngle):rotationAngle, isUndo);
         UpdateCost();
     }
 
@@ -100,14 +100,14 @@ public class Tile : MonoBehaviour
         {
             //Rotate(loc);
             ResetSelect();
-            EventBus.RotateStart(loc);
+            EventBus.RotateStart(loc, false);
         }
         //이 타일로 이동
         else if (moveTarget != -1)
         {
             (int, int) startLoc = GameManager.Instance.playerList[moveTarget].GetComponent<Player>().playerIndex;
             GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().AdjTileDisable();
-            EventBus.MoveStart(startLoc, loc);
+            EventBus.MoveStart(startLoc, loc, false);
         }
         else
         {   //타일 클릭(회전 선택)

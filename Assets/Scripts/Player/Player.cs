@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
         GameManager.Instance.moveStart -= MoveStart;
     }
 
-    void MoveStart((int,int) start, (int,int) end)
+    void MoveStart((int,int) start, (int,int) end, bool isUndo)
     {
         if (start != playerIndex)
             return;
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 
         Vector3 StartPos = transform.position;
         Vector3 EndPos = nextTile.transform.position + (Vector3)nextTile.objectPosition;
-        int cost = curTile.costs[idx];
+        int cost = isUndo ? -nextTile.costs[3-idx] : curTile.costs[idx];
 
         playerMove?.Invoke(StartPos, EndPos, cost);
     }

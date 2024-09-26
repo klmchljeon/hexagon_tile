@@ -5,10 +5,42 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ActionType
+{
+    Move,
+    Rotate
+}
+
+public struct PuzzleActionData
+{
+    public ActionType ActionType;
+    public (int, int) StartPos;
+    public (int, int) EndPos;
+    public bool CandyCatch;
+
+    // 이동에 대한 생성자
+    public PuzzleActionData(ActionType actionType, (int,int) startPos, (int,int) endPos)
+    {
+        ActionType = actionType;
+        StartPos = startPos;
+        EndPos = endPos;
+        CandyCatch = false;
+    }
+
+    // 회전에 대한 생성자
+    public PuzzleActionData(ActionType actionType, (int, int) idx)
+    {
+        ActionType = actionType;
+        StartPos = idx;
+        EndPos = (-1, -1);
+        CandyCatch = false;
+    }
+}
 
 public class GameManager : MonoBehaviour
 {
-    
+    public Stack<PuzzleActionData> actionStack = new Stack<PuzzleActionData>();
+
     [SerializeField]
     private TileGenerator tileGen;
 
@@ -24,12 +56,13 @@ public class GameManager : MonoBehaviour
 
     //event
     public event Action UpdateUI;
-    public event Action<(int, int)> TileRotate;
+    public event Action<(int, int), bool> TileRotate;
     public event Action<(int, int)> TileClick;
-    public event Action<(int, int), (int, int)> moveStart;
+    public event Action<(int, int), (int, int), bool> moveStart;
 
-    private bool isMoving = false;
-    private bool isRotating = false;
+    //status
+    public bool isMoving = false;
+    public bool isRotating = false;
 
     public GameObject panel;
     public GameObject layerMask;
@@ -84,11 +117,14 @@ public class GameManager : MonoBehaviour
         tileGen.isLoaded -= FirstInfoUpdate;
     }
 
-    void MoveStart((int,int) loc, (int,int) loc2)
+    void MoveStart((int,int) loc, (int,int) loc2, bool isUndo)
     {
         isMoving = true;
 
-        moveStart?.Invoke(loc, loc2);
+        if (!isUndo)
+            actionStack.Push(new PuzzleActionData(ActionType.Move, loc, loc2));
+
+        moveStart?.Invoke(loc, loc2, isUndo);
     }
 
     void MoveComplete((int, int) loc, int cost)
@@ -100,11 +136,14 @@ public class GameManager : MonoBehaviour
         GameEndCheck();
     }
 
-    void RotateStart((int, int) loc)
+    void RotateStart((int, int) loc, bool isUndo)
     {
-        TileRotate?.Invoke(loc);
-
         isRotating = true;
+        TileRotate?.Invoke(loc, isUndo);
+
+        if (!isUndo)
+            actionStack.Push(new PuzzleActionData(ActionType.Rotate, loc));
+        
     }
 
     void RotateComplete((int, int) loc, int cost)
@@ -113,8 +152,8 @@ public class GameManager : MonoBehaviour
         actionPoint -= cost;
 
         UpdateUI?.Invoke();
-        GameEndCheck();
-        TileClick(loc);
+        if (!GameEndCheck())
+            TileClick(loc);
     }
 
     void Update()
@@ -143,17 +182,16 @@ public class GameManager : MonoBehaviour
         }*/
     }
 
-    void GameEndCheck()
+    bool GameEndCheck()
     {
         bool flag = false;
-        if (false)//playerPosition == goalPosition)
+        if (candyCount == 0)
         {
             panel.SetActive(true);
             layerMask.SetActive(true);
 
             GameObject clear = panel.transform.Find("Clear").gameObject;
 
-            //goalPosition = new Vector2(-1,-1);
             Clear(clear);
             flag = true;
         }
@@ -167,6 +205,8 @@ public class GameManager : MonoBehaviour
             GameOver(fail);
             flag = true;
         }
+
+        return flag;
     }
 
     void Clear(GameObject clear)
