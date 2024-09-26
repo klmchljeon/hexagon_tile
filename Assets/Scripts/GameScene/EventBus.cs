@@ -2,29 +2,29 @@ using System;
 
 public static class EventBus
 {
-    public static event Action OnMoveStart;
-    public static event Action OnMoveComplete;
+    public static event Action<(int,int),(int,int)> OnMoveStart;
+    public static event Action<(int, int), int> OnMoveComplete;
 
-    public static event Action OnRotateStart;
-    public static event Action OnRotateComplete;
+    public static event Action<(int, int)> OnRotateStart;
+    public static event Action<(int, int), int> OnRotateComplete;
 
-    public static void MoveStart()
+    public static void MoveStart((int,int) loc, (int,int) loc2)
     {
-        OnMoveStart?.Invoke();
+        OnMoveStart?.Invoke(loc,loc2);
     }
 
-    public static void MoveComplete()
+    public static void MoveComplete((int, int) loc, int cost)
     {
-        OnMoveComplete?.Invoke();
+        OnMoveComplete?.Invoke(loc,cost);
     }
 
-    public static void RotateStart()
+    public static void RotateStart((int, int) loc)
     {
-        OnRotateStart?.Invoke();
+        OnRotateStart?.Invoke(loc);
     }
 
-    public static void RotateComplete()
+    public static void RotateComplete((int, int) loc, int cost)
     {
-        OnMoveComplete?.Invoke();
+        OnRotateComplete?.Invoke(loc, cost);
     }
 }

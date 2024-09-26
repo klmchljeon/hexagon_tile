@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
-    path: Assets/Scenes/TestScene.unity
+    path: Assets/Scenes/MapMaker.unity
     guid: ab957eacbdaa96947af224320248fb09
   m_configObjects: {}

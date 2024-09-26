@@ -5,17 +5,24 @@ using UnityEngine;
 public class TileRotate : MonoBehaviour
 {
     public bool isRotating = false; // 현재 회전 중인지 확인하는 플래그
-    public bool RotateEnd = false;
     private float rotationDuration = 1.0f; // 회전 애니메이션 지속 시간
     
     float startAngle;
     float endAngle;
     float elapsedTime;
 
+    Tile tile;
+
     // Start is called before the first frame update
     void Awake()
     {
-        GetComponent<Tile>().isRotateChanged += RotateAnimate;
+        tile = GetComponent<Tile>();
+        tile.isRotateChanged += RotateAnimate;
+    }
+
+    private void OnDestroy()
+    {
+        tile.isRotateChanged -= RotateAnimate;
     }
 
     private void Update()
@@ -48,7 +55,7 @@ public class TileRotate : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 0, endAngle%360); // 정확한 목표 각도로 설정
             isRotating = false; // 회전 완료
-            RotateEnd = true;
+            EventBus.RotateComplete(tile.loc, tile.rotateCost);
         }
     }
 }

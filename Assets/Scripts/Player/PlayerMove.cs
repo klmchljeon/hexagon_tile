@@ -13,11 +13,17 @@ public class PlayerMove : MonoBehaviour
 
     public Vector3 StartPos;
     public Vector3 EndPos;
+    int cost;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        GetComponent<Player>().playerMove += Move;
+    }
 
+    private void OnDestroy()
+    {
+        GetComponent<Player>().playerMove -= Move;
     }
 
     // Update is called once per frame
@@ -37,7 +43,16 @@ public class PlayerMove : MonoBehaviour
             timeElapsed = 0f;
             moveFlag = false;
             moveEnd = true;
+            EventBus.MoveComplete(GetComponent<Player>().playerIndex, cost);
         }
+    }
+
+    void Move(Vector3 startPos, Vector3 endPos, int cost)
+    {
+        StartPos = startPos;
+        EndPos = endPos;
+        this.cost = cost;
+        moveFlag = true;
     }
 
     Vector3 GetParabolicPosition(Vector3 start, Vector3 end, float t)

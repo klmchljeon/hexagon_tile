@@ -2,18 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
 {
-
+    
     [SerializeField]
     private TileGenerator tileGen;
 
+    //game info
     public GameObject[,] tileList = new GameObject[6, 6];
     public GameObject[] playerList = new GameObject[5];
     public GameObject[] candyList = new GameObject[5];
@@ -23,21 +22,19 @@ public class GameManager : MonoBehaviour
     public int playerCount;
     public int candyCount;
 
+    //event
     public event Action UpdateUI;
+    public event Action<(int, int)> TileRotate;
+    public event Action<(int, int)> TileClick;
+    public event Action<(int, int), (int, int)> moveStart;
 
     private bool isMoving = false;
     private bool isRotating = false;
 
-    private GameObject selectedObject = null; // 현재 선택된 오브젝트를 추적
-    private GameObject[] adjactTileList = new GameObject[4];
-
-    private string selectedObjectType = null;
-
-    private Vector3 originalScale; // 오브젝트의 원래 크기 저장
-    private TileRotate rotatingTile;
-
     public GameObject panel;
     public GameObject layerMask;
+
+    Camera mainCamera;
 
     public static GameManager Instance { get; private set; }
 
@@ -51,6 +48,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        mainCamera = Camera.main;
 
         tileGen.isLoaded += FirstInfoUpdate;
         EventBus.OnMoveStart += MoveStart;
@@ -85,35 +84,49 @@ public class GameManager : MonoBehaviour
         tileGen.isLoaded -= FirstInfoUpdate;
     }
 
-    void MoveStart()
+    void MoveStart((int,int) loc, (int,int) loc2)
     {
         isMoving = true;
+
+        moveStart?.Invoke(loc, loc2);
     }
 
-    void MoveComplete()
+    void MoveComplete((int, int) loc, int cost)
     {
         isMoving = false;
+        actionPoint -= cost;
 
         UpdateUI?.Invoke();
+        GameEndCheck();
     }
 
-    void RotateStart()
+    void RotateStart((int, int) loc)
     {
+        TileRotate?.Invoke(loc);
+
         isRotating = true;
     }
 
-    void RotateComplete()
+    void RotateComplete((int, int) loc, int cost)
     {
         isRotating = false;
+        actionPoint -= cost;
 
         UpdateUI?.Invoke();
+        GameEndCheck();
+        TileClick(loc);
     }
 
     void Update()
     {
 
-        if (player.GetComponent<PlayerMove>().moveEnd)
+        if (!isMoving && !isRotating)
         {
+            SelectTile();
+        }
+
+        //if (player.GetComponent<PlayerMove>().moveEnd)
+        /*{
             if (goalPosition == playerPosition)
             {
                 candyCount--;
@@ -127,36 +140,20 @@ public class GameManager : MonoBehaviour
             ReSelect(playerPosition);
             GameEndCheck();
             Debug.Log($"이동 끝 포인트: {actionPoint}");
-        }
-
-        if (rotatingTile != null && rotatingTile.RotateEnd)
-        {
-            //Debug.Log("회전 끝");
-            UpdateUI?.Invoke((int)playerPosition.x, (int)playerPosition.y);
-            rotatingTile.RotateEnd = false;
-            rotatingTile = null;
-
-            GameEndCheck();
-            Debug.Log($"회전 끝 포인트: {actionPoint}");
-        }
-        
-        if (!player.GetComponent<PlayerMove>().moveFlag && rotatingTile == null)
-        {
-            SelectTile();
-        }
+        }*/
     }
 
     void GameEndCheck()
     {
         bool flag = false;
-        if (playerPosition == goalPosition)
+        if (false)//playerPosition == goalPosition)
         {
             panel.SetActive(true);
             layerMask.SetActive(true);
 
             GameObject clear = panel.transform.Find("Clear").gameObject;
 
-            goalPosition = new Vector2(-1,-1);
+            //goalPosition = new Vector2(-1,-1);
             Clear(clear);
             flag = true;
         }
@@ -170,17 +167,12 @@ public class GameManager : MonoBehaviour
             GameOver(fail);
             flag = true;
         }
-
-        if (flag)
-        {
-            ResetObjectSelection();
-        }
     }
 
     void Clear(GameObject clear)
     {
         //사탕 획득 모션
-        goal.GetComponent<FloatingItem>().isCollected = true;
+        //goal.GetComponent<FloatingItem>().isCollected = true;
 
         clear.SetActive(true);
     }
@@ -188,51 +180,6 @@ public class GameManager : MonoBehaviour
     void GameOver(GameObject fail)
     {
         fail.SetActive(true);
-    }
-
-    void MovePlayer(GameObject moveTile, Vector2 nextPosition)
-    {
-        int idx = -1;
-        for (int i = 0; i < adjactTileList.Length; i++)
-        {
-            if (adjactTileList[i] == moveTile)
-            {
-                idx = i;
-                break;
-            }
-        }
-
-        if (idx == -1)
-        {
-            return;
-        }
-
-        PlayerMove playerMove = player.GetComponent<PlayerMove>();
-
-        if (playerMove.moveFlag) 
-        {
-            //Debug.Log("이동중");
-            return;
-        }
-
-        int x = (int)playerPosition.x;
-        int y = (int)playerPosition.y;
-
-        int nx = (int)nextPosition.x;
-        int ny = (int)nextPosition.y;
-        
-        playerPosition = new Vector2(nx, ny);
-
-        Tile curTile = tileList[x, y].GetComponent<Tile>();
-        Tile nextTile = tileList[nx, ny].GetComponent<Tile>();
-
-        actionPoint -= curTile.costs[idx];
-
-        playerMove.StartPos = player.transform.position;
-        playerMove.EndPos = nextTile.transform.position + (Vector3)nextTile.objectPosition;
-
-        playerMove.moveFlag = true;
-
     }
 
     void SelectTile()
@@ -248,137 +195,20 @@ public class GameManager : MonoBehaviour
 
                 if (clickedObject.name[0] != 'T') 
                 {
-                    ResetObjectSelection();
+                    TileClick?.Invoke((-1, -1));
                     return;
                 }
 
                 int x = Int32.Parse(clickedObject.name[1].ToString());
                 int y = Int32.Parse(clickedObject.name[2].ToString());
 
-                Vector2 tileIndex = new Vector2(x, y);
-                
-                // 인접한 타일을 누른 경우
-                if (adjactTileList.Contains(clickedObject))
-                {
-                    MovePlayer(clickedObject, tileIndex);
-                    ResetObjectSelection();
-                    return;
-                }
-                
-                if (tileIndex == goalPosition)
-                {
-                    ResetObjectSelection();
-                    return;
-                }
-
-
-                // 이미 선택된 오브젝트를 다시 선택한 경우
-                if (selectedObject == clickedObject)
-                {
-                    if (selectedObjectType == "Tile")
-                    {
-                        PerformSecondaryActionTile(clickedObject); // 다시 선택 시 동작 수행
-                    }
-                }
-                else
-                {
-                    // 새로운 오브젝트 선택 시
-                    if (selectedObjectType != null)
-                    {
-                        ResetObjectSelection(); // 이전에 선택된 오브젝트의 크기를 원래대로 복구
-                    }
-
-                    SelectObject(clickedObject, tileIndex); // 새로운 오브젝트 선택
-                }
+                (int, int) tileIndex = (x, y);
+                TileClick.Invoke(tileIndex);
             }
             else
             {
-                ResetObjectSelection();
+                TileClick?.Invoke((-1, -1));
             }
-        }
-    }
-
-    void ReSelect(Vector2 tileIndex)
-    {
-        GameObject obj = tileList[(int)tileIndex.x, (int)tileIndex.y];
-        SelectObject(obj, tileIndex);
-    }
-
-    void SelectObject(GameObject obj, Vector2 tileIndex)
-    {
-        if (tileIndex == playerPosition)
-        {
-            selectedObject = player;
-            selectedObjectType = "Player";
-
-            Tile tile = obj.GetComponent<Tile>();
-            for (int i = 0; i < adjactTileList.Length; i++)
-            {
-                if (tile.costs[i] == -1) continue;
-                if (tile.costs[i] > actionPoint) continue;
-
-                if (tile.adjacentTiles[i] == null) continue;
-
-                adjactTileList[i] = tile.adjacentTiles[i].gameObject;
-                tile.adjacentTiles[i].MovableSelect();
-                Debug.Log("선택");
-            }
-        }
-        else
-        {
-            if (obj.GetComponent<Tile>().cantRotate)
-            {
-                Debug.Log("회전 불가능");
-                if (obj.GetComponent<ShakeEffect>() != null)
-                {
-                    obj.GetComponent<ShakeEffect>().Shake();
-                }
-                return;
-            }
-
-            selectedObject = obj;
-            selectedObjectType = "Tile";
-
-            originalScale = obj.transform.localScale; // 원래 크기 저장
-            obj.transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대
-            obj.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        }
-    }
-
-    void PerformSecondaryActionTile(GameObject obj)
-    {
-        //Debug.Log("Object " + obj.name + " was selected again!");
-        // 여기에 오브젝트를 다시 클릭했을 때 수행할 동작 추가
-        obj.GetComponent<Tile>().Rotate();
-        rotatingTile = obj.GetComponent<TileRotate>();
-        rotatingTile.RotateEnd = false;
-        actionPoint -= 1;
-
-        ResetObjectSelection();
-    }
-
-    // 오브젝트의 크기를 원래대로 복구
-    void ResetObjectSelection()
-    {
-        if (selectedObject != null)
-        {
-            if (selectedObjectType == "Tile")
-            {
-                selectedObject.transform.localScale = originalScale;
-                selectedObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            }
-            else if (selectedObjectType == "Player")
-            {
-                for (int i = 0; i < adjactTileList.Length; i++)
-                {
-                    if (adjactTileList[i] != null)
-                        adjactTileList[i].GetComponent<Tile>().ResetSelect();
-                    adjactTileList[i] = null;
-                }
-            }
-
-            selectedObject = null;
-            selectedObjectType = null;
         }
     }
 }
