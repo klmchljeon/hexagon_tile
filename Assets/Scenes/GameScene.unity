@@ -3114,13 +3114,28 @@ MonoBehaviour:
   - {fileID: 470625918454353094, guid: d17815f7326245b439e5a6999c30eafb, type: 3}
   - {fileID: 470625918454353094, guid: d17815f7326245b439e5a6999c30eafb, type: 3}
   - {fileID: 470625918454353094, guid: d17815f7326245b439e5a6999c30eafb, type: 3}
-  candy: {fileID: 3463055591325702526, guid: c40e12ba27eda7e428e3ce85322bc697, type: 3}
-  goalIndex: {x: 0, y: 0}
-  player: {fileID: 2892256410033003312, guid: 2a7f33d4ff1ac6b4696677b81ad3113a, type: 3}
-  playerIndex: {x: 0, y: 0}
-  actionPoint: 0
+  playerPrefabs:
+  - {fileID: 2892256410033003312, guid: 2a7f33d4ff1ac6b4696677b81ad3113a, type: 3}
+  candyPrefabs:
+  - {fileID: 3463055591325702526, guid: c40e12ba27eda7e428e3ce85322bc697, type: 3}
   tileParent: {fileID: 90908858}
+  playerParent: {fileID: 0}
+  candyParent: {fileID: 0}
   offset: {x: 1, y: -0.7, z: 0}
+  playerList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  candyList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  actionPoint: 0
+  stageNum: 0
 --- !u!4 &819161726
 Transform:
   m_ObjectHideFlags: 0
@@ -6208,17 +6223,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileGen: {fileID: 819161725}
-  playerPosition: {x: 0, y: 0}
-  goalPosition: {x: 0, y: 0}
+  playerList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  candyList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   actionPoint: 0
+  stageNum: 0
+  playerCount: 0
   candyCount: 1
-  player: {fileID: 0}
-  goal: {fileID: 0}
-  buttons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  isMoving: 0
+  isRotating: 0
   panel: {fileID: 1326035809}
   layerMask: {fileID: 322325242}
 --- !u!114 &1611637090

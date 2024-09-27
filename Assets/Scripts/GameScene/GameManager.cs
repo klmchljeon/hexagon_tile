@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
             if (playerList[i] != null) playerCount++;
             if (candyList[i] != null) candyCount++;
         }
+        Debug.Log(playerCount);
 
         UpdateUI?.Invoke();
         tileGen.isLoaded -= FirstInfoUpdate;
@@ -133,7 +134,8 @@ public class GameManager : MonoBehaviour
         actionPoint -= cost;
 
         UpdateUI?.Invoke();
-        GameEndCheck();
+        if (!GameEndCheck())
+            TileClick(loc);
     }
 
     void RotateStart((int, int) loc, bool isUndo)
@@ -152,8 +154,7 @@ public class GameManager : MonoBehaviour
         actionPoint -= cost;
 
         UpdateUI?.Invoke();
-        if (!GameEndCheck())
-            TileClick(loc);
+        GameEndCheck();
     }
 
     void Update()

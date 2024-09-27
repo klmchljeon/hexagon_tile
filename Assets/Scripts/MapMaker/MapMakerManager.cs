@@ -9,6 +9,8 @@ public class MapMakerManager : MonoBehaviour
     [SerializeField] private GameObject ObjectSelect;
     [SerializeField] private GameObject Map;
 
+    [SerializeField] private string fileName;
+
     Button[] objectButtons;
     Button[] mapButtons;
 
@@ -46,10 +48,14 @@ public class MapMakerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string stagePath = "Assets/Stage/MapMaker1.asset";
+        string stagePath = $"Assets/Stage/{fileName}.asset";
 
         // StageData가 없으면 생성, 있으면 불러옴
         stageData = ScriptableObjectUtility.CreateOrLoadScriptableObject<StageData>(stagePath);
+        for (int i = 0; i < stageData.tileInfos.Length; i++)
+        {
+            Init(i);
+        }
     }
 
     void Select(Button button)
@@ -61,7 +67,7 @@ public class MapMakerManager : MonoBehaviour
 
     void Apply(Button button)
     {
-        int buttonIndx = button.transform.GetSiblingIndex();
+        int buttonIndex = button.transform.GetSiblingIndex();
         switch (selectIndex)
         {
             //타일
@@ -69,94 +75,188 @@ public class MapMakerManager : MonoBehaviour
             case 1:
             case 2:
             case 3:
-                TileApply(buttonIndx, selectIndex);
+                TileApply(buttonIndex, selectIndex);
                 break;
 
             case 4:
+                SetPlayer(buttonIndex);
                 break;
 
             case 5:
+                SetCandy(buttonIndex);
                 break;
 
             case 6:
-                TileRotate(buttonIndx);
+                TileRotate(buttonIndex);
                 break;
 
             case 7:
-                TileCantRotate(buttonIndx);
+                TileCantRotate(buttonIndex);
                 break;
 
             //지우개(10번타일,회전불가능,회전x)
             case 8:
-                Erase(buttonIndx);
+                Erase(buttonIndex);
                 break;
 
             default:
                 Debug.Log("할당안됨");
                 break;
         }
+
+        GetComponent<SaveScriptableObjectAsJson>().SaveToJsonFile(stageData);
     }
 
-    void TileApply(int tileIdx, int type)
+    void Init(int tileIdx)
     {
         if (stageData.tileInfos[tileIdx] == null)
         {
             stageData.tileInfos[tileIdx] = new TileInfo();
         }
 
-        stageData.tileInfos[tileIdx].tileNum = type;
+        if (stageData.tileInfos[tileIdx].tileNum == 10)
+        {
+            Erase(tileIdx);
+            return;
+        }
+
+        TileApply(tileIdx, stageData.tileInfos[tileIdx].tileNum);
+
+        Vector2Int loc = new Vector2Int(tileIdx % 6, tileIdx / 6);
+        for (int i = 0; i < stageData.playerInfos.Length; i++)
+        {
+            if (stageData.playerInfos[i].loc == loc)
+            {
+                GameObject child = new GameObject("player");
+                child.transform.SetParent(mapButtons[tileIdx].transform);
+                child.AddComponent<Image>().sprite = objectButtons[4].GetComponent<Image>().sprite;
+                child.transform.localPosition = Vector3.zero;
+                break;
+            }
+        }
+
+        for (int i = 0; i < stageData.candyInfos.Length; i++)
+        {
+            if (stageData.candyInfos[i].loc == loc)
+            {
+                GameObject child = new GameObject("candy");
+                child.transform.SetParent(mapButtons[tileIdx].transform);
+                child.AddComponent<Image>().sprite = objectButtons[5].GetComponent<Image>().sprite;
+                child.transform.localPosition = Vector3.zero;
+                break;
+            }
+        }
+    }
+
+    void TileApply(int tileIdx, int type)
+    {
         mapButtons[tileIdx].GetComponent<Image>().sprite = objectButtons[type].GetComponent<Image>().sprite;
 
-        if (stageData.tileInfos[tileIdx].isRotate)
+        if (stageData.tileInfos[tileIdx].tileNum == 10)
         {
             mapButtons[tileIdx].transform.localEulerAngles = new Vector3(0, 0, 0);
+            stageData.tileInfos[tileIdx].isRotate = false;
+
+            mapButtons[tileIdx].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            stageData.tileInfos[tileIdx].cantRotate = false;
         }
-        if (stageData.tileInfos[tileIdx].cantRotate)
+        else
         {
-            mapButtons[tileIdx].GetComponent<Image>().color = new Color(190f / 255f, 190f / 255f, 190f / 255f, 1f);
+            if (stageData.tileInfos[tileIdx].isRotate)
+            {
+                mapButtons[tileIdx].transform.localEulerAngles = new Vector3(0, 0, (type != 1) ? 180f : 60f);
+                if (mapButtons[tileIdx].transform.childCount != 0)
+                {
+                    GameObject child = mapButtons[tileIdx].transform.GetChild(0).gameObject;
+                    child.transform.localEulerAngles = new Vector3(0, 0, -((type != 1) ? 180f : 60f));
+                }
+            }
+            if (stageData.tileInfos[tileIdx].cantRotate)
+            {
+                mapButtons[tileIdx].GetComponent<Image>().color = new Color(190f / 255f, 190f / 255f, 190f / 255f, 1f);
+            }
         }
+
+        stageData.tileInfos[tileIdx].tileNum = type;
+        Debug.Log(type);
     }
 
     void TileRotate(int tileIdx)
     {
-        if (stageData.tileInfos[tileIdx] == null) return;
         if (stageData.tileInfos[tileIdx].tileNum == 10) return;
 
         if (stageData.tileInfos[tileIdx].isRotate)
         {
             stageData.tileInfos[tileIdx].isRotate = false;
             mapButtons[tileIdx].transform.localEulerAngles = new Vector3(0, 0, 0);
+            if (mapButtons[tileIdx].transform.childCount != 0)
+            {
+                GameObject child = mapButtons[tileIdx].transform.GetChild(0).gameObject;
+                child.transform.localEulerAngles = new Vector3(0, 0, 0);
+            }
         }
         else
         {
             stageData.tileInfos[tileIdx].isRotate = true;
             mapButtons[tileIdx].transform.localEulerAngles = new Vector3(0, 0, (stageData.tileInfos[tileIdx].tileNum != 1) ? 180f : 60f);
+            if (mapButtons[tileIdx].transform.childCount != 0)
+            {
+                GameObject child = mapButtons[tileIdx].transform.GetChild(0).gameObject;
+                child.transform.localEulerAngles = new Vector3(0, 0, -((stageData.tileInfos[tileIdx].tileNum != 1) ? 180f : 60f));
+            }
         }
     }
 
     void SetPlayer(int tileIdx)
     {
-        if (stageData.tileInfos[tileIdx] == null) return;
         if (stageData.tileInfos[tileIdx].tileNum == 10) return;
 
-        (int,int) loc = (tileIdx % 6, tileIdx / 6);
-
-        //PlayerInfo player = new PlayerInfo();
-        //player.loc = (tileIdx % 6, tileIdx / 6);
+        Vector2Int loc = new Vector2Int(tileIdx % 6, tileIdx / 6);
 
         for (int i = 0; i < stageData.playerInfos.Length; i++)
         {
-            if (stageData.playerInfos[i] != null && stageData.playerInfos[i].loc == loc) return;
-            if (stageData.candyInfos[i] != null && stageData.candyInfos[i].loc == loc) return;
-        } 
+            if (stageData.playerInfos[i].loc == loc) return;
+            if (stageData.candyInfos[i].loc == loc) return;
+        }
 
         for (int i = 0; i < stageData.playerInfos.Length; i++)
         {
-            if (stageData.playerInfos[i] != null)
+            if (stageData.playerInfos[i].loc == new Vector2Int(-1,-1))
             {
-                stageData.playerInfos[i] = new PlayerInfo();
+                //stageData.playerInfos[i] = new PlayerInfo();
                 stageData.playerInfos[i].loc = loc;
-                
+                GameObject child = new GameObject("player");
+                child.transform.SetParent(mapButtons[tileIdx].transform);
+                child.AddComponent<Image>().sprite = objectButtons[4].GetComponent<Image>().sprite;
+                child.transform.localPosition = Vector3.zero;
+                break;
+            }
+        }
+    }
+
+    void SetCandy(int tileIdx)
+    {
+        if (stageData.tileInfos[tileIdx].tileNum == 10) return;
+
+        Vector2Int loc = new Vector2Int(tileIdx % 6, tileIdx / 6);
+
+        for (int i = 0; i < stageData.candyInfos.Length; i++)
+        {
+            if (stageData.playerInfos[i].loc == loc) return;
+            if (stageData.candyInfos[i].loc == loc) return;
+        }
+
+        for (int i = 0; i < stageData.candyInfos.Length; i++)
+        {
+            if (stageData.candyInfos[i].loc == new Vector2Int(-1,-1))
+            {
+                //stageData.candyInfos[i] = new CandyInfo();
+                stageData.candyInfos[i].loc = loc;
+                GameObject child = new GameObject("candy");
+                child.transform.SetParent(mapButtons[tileIdx].transform);
+                child.AddComponent<Image>().sprite = objectButtons[5].GetComponent<Image>().sprite;
+                child.transform.localPosition = Vector3.zero;
+                break;
             }
         }
     }
@@ -180,13 +280,39 @@ public class MapMakerManager : MonoBehaviour
 
     void Erase(int tileIdx)
     {
-        if (stageData.tileInfos[tileIdx] == null)
-        {
-            stageData.tileInfos[tileIdx] = new TileInfo();
-        }
-
         stageData.tileInfos[tileIdx].tileNum = 10;
         mapButtons[tileIdx].GetComponent<Image>().sprite = objectButtons[8].GetComponent<Image>().sprite;
+
+        if (mapButtons[tileIdx].transform.childCount != 0)
+        {
+            GameObject child = mapButtons[tileIdx].transform.GetChild(0).gameObject;
+            Vector2Int loc = new Vector2Int(tileIdx % 6, tileIdx / 6);
+
+            if (child.name == "player")
+            {
+                for (int i = 0; i < stageData.playerInfos.Length; i++)
+                {
+                    if (stageData.playerInfos[i].loc == loc)
+                    {
+                        stageData.playerInfos[i].loc = new Vector2Int(-1,-1);
+                        break;
+                    }
+                }
+            }
+            else if (child.name == "candy")
+            {
+                for (int i = 0; i < stageData.candyInfos.Length; i++)
+                {
+                    if (stageData.candyInfos[i].loc == loc)
+                    {
+                        stageData.candyInfos[i].loc = new Vector2Int(-1,-1);
+                        break;
+                    }
+                }
+            }
+
+            Destroy(child);
+        }
 
         stageData.tileInfos[tileIdx].isRotate = false;
         stageData.tileInfos[tileIdx].cantRotate = true;

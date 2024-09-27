@@ -31,6 +31,7 @@ public class Tile : MonoBehaviour
     public bool rotateSelecting = false;
     public int moveTarget = -1;
     public int onTileObject = -1;
+    public int onTileCandy = -1;
 
     public GameObject MovableEffect;
 
@@ -45,7 +46,7 @@ public class Tile : MonoBehaviour
 
     //etc
     public Vector2 objectPosition;
-    private Vector3 originalScale; // 오브젝트의 원래 크기 저장
+    private Vector3 originalScale = new Vector3(1, 1, 1); // 오브젝트의 원래 크기 저장
 
     public void FirstRotate()
     {
@@ -88,12 +89,13 @@ public class Tile : MonoBehaviour
 
     void ClickJudge((int,int) loc)
     {
-        //본인, 인접한 타일들을 제외하고 상태 초기화
         if (loc != this.loc && Array.IndexOf(adjacentIdx,loc) == -1)
         {
             ResetSelect();
             return;
         }
+
+        Debug.Log(loc);
 
         //타일 회전
         if (rotateSelecting)
@@ -109,8 +111,9 @@ public class Tile : MonoBehaviour
             GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().AdjTileDisable();
             EventBus.MoveStart(startLoc, loc, false);
         }
-        else
-        {   //타일 클릭(회전 선택)
+        else if (onTileCandy == -1)
+        {
+            //타일 클릭(회전 선택)
             if (onTileObject == -1)
             {
                 RotatableSelect();
@@ -141,7 +144,7 @@ public class Tile : MonoBehaviour
 
         originalScale = transform.localScale; // 원래 크기 저장
         transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대
-        GetComponent<SpriteRenderer>().sortingOrder = 1;
+        GetComponent<SpriteRenderer>().sortingOrder = 0;
 
         rotateSelecting = true;
     }
@@ -150,11 +153,11 @@ public class Tile : MonoBehaviour
         moveTarget = -1;
         rotateSelecting = false;
 
-        if (!MovableEffect.activeSelf)
+        if (MovableEffect.activeSelf)
             MovableEffect.SetActive(false);
 
         transform.localScale = originalScale;
-        GetComponent<SpriteRenderer>().sortingOrder = 0;
+        GetComponent<SpriteRenderer>().sortingOrder = -1;
     }
 
     public void AdjTileEnable(int idx)
@@ -162,6 +165,8 @@ public class Tile : MonoBehaviour
         for (int i = 0; i < adjacentTiles.Length; i++)
         {
             if (adjacentTiles[i] == null) continue;
+            if (adjacentTiles[i].onTileObject != -1) continue;
+            if (costs[i] > GameManager.Instance.actionPoint) continue;
 
             adjacentTiles[i].MovableSelect(idx);
         }
@@ -191,6 +196,7 @@ public class Tile : MonoBehaviour
 
     public virtual int Calculate(Tile adjTile, int index)
     {
+        Debug.Log("계산");
         bool toUp = index < 2;
         //bool toLeft = index % 2 == 0;
 

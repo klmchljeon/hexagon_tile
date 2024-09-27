@@ -1888,7 +1888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageDatas:
-  - {fileID: 11400000, guid: a0107a1d81f21c643bf074fccbead9ea, type: 2}
+  - {fileID: 11400000, guid: 89170640965db2248bc3d3c34ebe9c02, type: 2}
   - {fileID: 11400000, guid: b9392ecf4fee1b542b286500e0f2ae45, type: 2}
   - {fileID: 11400000, guid: 50848e02259e02f42b46ceddc64864da, type: 2}
   - {fileID: 11400000, guid: da78d2508b1c75e4fa2d1b707a0f0bb8, type: 2}

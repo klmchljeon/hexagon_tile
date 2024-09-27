@@ -50,15 +50,16 @@ public class TileGenerator : MonoBehaviour
 
         if (stageData != null)
         {
-            for (int x = 0; x < 6; x++)
+            for (int y = 0; y < 6; y++)
             {
-                for (int y = 0; y < 6; y++)
+                for (int x = 0; x < 6; x++)
                 {
                     Vector3 position = CalculatePosition(x, y, offset); // 타일의 위치 설정
                     int index = x + y * 6;
                     TileInfo tileInfo = stageData.tileInfos[index];
 
                     GameObject tileObject = Instantiate(tilePrefabs[tileInfo.tileNum], position, Quaternion.identity);
+                    tileObject.GetComponent<Tile>().loc = (x, y);
 
                     if (tileInfo.isRotate)
                     {
@@ -81,34 +82,44 @@ public class TileGenerator : MonoBehaviour
             for (int i = 0; i < 5; i++)
             {
                 PlayerInfo playerInfo = stageData.playerInfos[i];
-                if (playerInfo == null) break;
-                
-                (int, int) loc = playerInfo.loc;
-                GameObject playerTile = tileList[loc.Item1, loc.Item2];
+                if (playerInfo.loc == new Vector2Int(-1,-1)) continue;
+
+                Vector2Int loc = playerInfo.loc;
+                GameObject playerTile = tileList[loc.x, loc.y];
                 GameObject playerObject = Instantiate(playerPrefabs[playerInfo.color]);
 
                 Vector3 playerPosition = (Vector3)(playerTile.GetComponent<Tile>().objectPosition);
-                
+                playerObject.GetComponent<Player>().playerIndex = (loc.x, loc.y);
+                playerObject.GetComponent<Player>().color = playerInfo.color;
+
+                tileList[loc.x, loc.y].GetComponent<Tile>().onTileObject = i;
+
                 playerObject.transform.position = playerTile.transform.position + playerPosition;
                 playerObject.transform.SetParent(playerParent.transform, true);
                 playerObject.name = $"P{i}";
+
+                //playerList[i] = playerObject;
 
             }
 
             for (int i = 0; i < 5; i++)
             {
                 CandyInfo candyInfo = stageData.candyInfos[i];
-                if (candyInfo == null) break;
+                if (candyInfo.loc == new Vector2Int(-1,-1)) continue;
 
-                (int, int) loc = candyInfo.loc;
-                GameObject candyTile = tileList[loc.Item1, loc.Item2];
+                Vector2Int loc = candyInfo.loc;
+                GameObject candyTile = tileList[loc.x, loc.y];
                 GameObject candyObject = Instantiate(candyPrefabs[candyInfo.color]);
+
+                tileList[loc.x, loc.y].GetComponent<Tile>().onTileCandy = i;
 
                 Vector3 candyPosition = (Vector3)(candyTile.GetComponent<Tile>().objectPosition);
 
                 candyObject.transform.position = candyTile.transform.position + candyPosition;
                 candyObject.transform.SetParent(candyParent.transform, true);
                 candyObject.name = $"C{i}";
+
+                //candyList[i] = candyObject;
             }
 
             int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 }};
