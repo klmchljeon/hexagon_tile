@@ -69,12 +69,15 @@ public class Tile : MonoBehaviour
     {
         GameManager.Instance.TileRotate += Rotate;
         GameManager.Instance.TileClick += ClickJudge;
+        GameManager.Instance.moveStart += UndoMove;
+
     }
 
     private void OnDestroy()
     {
         GameManager.Instance.TileRotate -= Rotate;
         GameManager.Instance.TileClick -= ClickJudge;
+        GameManager.Instance.moveStart -= UndoMove;
     }
 
     private void Start()
@@ -85,6 +88,20 @@ public class Tile : MonoBehaviour
     private void Update()
     {
 
+    }
+
+    void UndoMove((int,int) startLoc, (int,int) loc, bool isUndo)
+    {
+        if (!isUndo) return;
+        if (loc != this.loc) return;
+
+        onTileObject = GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().onTileObject;
+        GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().onTileObject = -1;
+
+        //onTileObject = moveTarget;
+        //GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().AdjTileDisable();
+        //GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().onTileObject = -1;
+        //moveTarget = -1;
     }
 
     void ClickJudge((int,int) loc)

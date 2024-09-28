@@ -30,6 +30,10 @@ public class UndoButton : MonoBehaviour
         if (action.ActionType == ActionType.Move)
         {
             EventBus.MoveStart(action.EndPos, action.StartPos, true);
+            if (action.CandyCatch)
+            {
+                EventBus.UndoEvent(action.EndPos, true);
+            }
         }
         else
         {

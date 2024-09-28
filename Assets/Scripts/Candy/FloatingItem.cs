@@ -27,11 +27,17 @@ public class FloatingItem : MonoBehaviour
     private void Awake()
     {
         GetComponent<Candy>().onCatch += CatchCandy;
+
+        //수정 필요?
+        EventBus.OnUndoEvent += UndoCandy;
     }
 
     private void OnDestroy()
     {
         GetComponent<Candy>().onCatch -= CatchCandy;
+
+        //수정 필요?
+        EventBus.OnUndoEvent -= UndoCandy;
     }
 
     void Start()
@@ -86,10 +92,15 @@ public class FloatingItem : MonoBehaviour
         isFloated = false;
     }
 
-    void UndoCandy()
+    void UndoCandy((int,int) loc, bool isCatchCandy)
     {
+        if (GetComponent<Candy>().candyIndex != loc || !isCatchCandy) 
+        {
+            return;
+        }
+
         GetComponent<Candy>().isCatch = false;
-        
+        GameManager.Instance.candyCount++;
         spriteRenderer.color = initialColor;
     }
 }
