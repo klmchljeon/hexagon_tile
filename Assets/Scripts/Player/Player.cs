@@ -30,8 +30,10 @@ public class Player : MonoBehaviour
         Tile nextTile = GameManager.Instance.tileList[end.Item1, end.Item2].GetComponent<Tile>();
 
         int idx = -1;
+        Debug.Log(end);
         for (int i = 0; i < curTile.adjacentIdx.Length; i++)
         {
+            Debug.Log(curTile.adjacentIdx[i]);
             if (end == curTile.adjacentIdx[i])
             {
                 idx = i;

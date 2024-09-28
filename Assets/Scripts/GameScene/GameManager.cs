@@ -112,7 +112,6 @@ public class GameManager : MonoBehaviour
             if (playerList[i] != null) playerCount++;
             if (candyList[i] != null) candyCount++;
         }
-        Debug.Log(playerCount);
 
         UpdateUI?.Invoke();
         tileGen.isLoaded -= FirstInfoUpdate;
@@ -120,6 +119,7 @@ public class GameManager : MonoBehaviour
 
     void MoveStart((int,int) loc, (int,int) loc2, bool isUndo)
     {
+        Debug.Log("이동 시작");
         isMoving = true;
 
         if (!isUndo)
@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
 
     void MoveComplete((int, int) loc, int cost)
     {
+        Debug.Log("이동 완료");
         isMoving = false;
         actionPoint -= cost;
 
@@ -140,6 +141,7 @@ public class GameManager : MonoBehaviour
 
     void RotateStart((int, int) loc, bool isUndo)
     {
+        Debug.Log("회전 시작");
         isRotating = true;
         TileRotate?.Invoke(loc, isUndo);
 
@@ -150,6 +152,7 @@ public class GameManager : MonoBehaviour
 
     void RotateComplete((int, int) loc, int cost)
     {
+        Debug.Log("회전 완료");
         isRotating = false;
         actionPoint -= cost;
 

@@ -152,7 +152,7 @@ public class LeftLadderTile : Tile
             }
         }
 
-        Debug.Log($"{tileNum}, {adjTile.tileNum} 간 정의 필요");
+        //Debug.Log($"{tileNum}, {adjTile.tileNum} 간 정의 필요");
         return -1;
     }
 }

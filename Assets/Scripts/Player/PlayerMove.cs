@@ -19,6 +19,7 @@ public class PlayerMove : MonoBehaviour
     void Awake()
     {
         GetComponent<Player>().playerMove += Move;
+        Debug.Log("구독");
     }
 
     private void OnDestroy()
@@ -53,6 +54,7 @@ public class PlayerMove : MonoBehaviour
         EndPos = endPos;
         this.cost = cost;
         moveFlag = true;
+        Debug.Log("시작");
     }
 
     Vector3 GetParabolicPosition(Vector3 start, Vector3 end, float t)

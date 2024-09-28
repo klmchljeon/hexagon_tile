@@ -98,7 +98,7 @@ public class TileGenerator : MonoBehaviour
                 playerObject.transform.SetParent(playerParent.transform, true);
                 playerObject.name = $"P{i}";
 
-                //playerList[i] = playerObject;
+                playerList[i] = playerObject;
 
             }
 
@@ -119,7 +119,7 @@ public class TileGenerator : MonoBehaviour
                 candyObject.transform.SetParent(candyParent.transform, true);
                 candyObject.name = $"C{i}";
 
-                //candyList[i] = candyObject;
+                candyList[i] = candyObject;
             }
 
             int[,] dx = { { -1, 0 }, { 0, 1 }, { -1, 0 }, { 0, 1 }};
@@ -129,6 +129,7 @@ public class TileGenerator : MonoBehaviour
             {
                 for (int y = 0; y < 6; y++)
                 {
+                    if (tileList[x,y] == null) continue;
                     Tile curTile = tileList[x, y].GetComponent<Tile>();
 
                     for (int i = 0; i < 4; i++)
@@ -138,7 +139,9 @@ public class TileGenerator : MonoBehaviour
 
                         if (CheckRange(nx,ny))
                         {
+                            if (tileList[nx, ny] == null) continue;
                             curTile.adjacentTiles[i] = tileList[nx,ny].GetComponent<Tile>();
+                            curTile.adjacentIdx[i] = (nx, ny);
                         }
                     }
                     curTile.UpdateCost();

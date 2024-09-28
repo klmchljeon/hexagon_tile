@@ -63,7 +63,7 @@ MonoBehaviour:
     color: 0
     buttons: 000000
   - tileNum: 3
-    cantRotate: 0
+    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
@@ -74,31 +74,6 @@ MonoBehaviour:
     buttons: 000000
   - tileNum: 10
     cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 3
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 3
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 3
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 3
-    cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
@@ -118,17 +93,47 @@ MonoBehaviour:
     color: 0
     buttons: 000000
   - tileNum: 3
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 3
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
   - tileNum: 3
     cantRotate: 0
-    isRotate: 0
+    isRotate: 1
     color: 0
     buttons: 000000
   - tileNum: 3
-    cantRotate: 0
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
@@ -142,12 +147,7 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
     color: 0
     buttons: 000000
   playerInfos:
-  - loc: {x: 2, y: 4}
+  - loc: {x: -1, y: -1}
     color: 0
   - loc: {x: 2, y: 3}
     color: 0

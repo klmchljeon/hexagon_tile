@@ -89,13 +89,13 @@ public class Tile : MonoBehaviour
 
     void ClickJudge((int,int) loc)
     {
-        if (loc != this.loc && Array.IndexOf(adjacentIdx,loc) == -1)
+        if (loc != this.loc) // && Array.IndexOf(adjacentIdx,loc) == -1)
         {
             ResetSelect();
             return;
         }
 
-        Debug.Log(loc);
+        //Debug.Log(loc);
 
         //타일 회전
         if (rotateSelecting)
@@ -107,8 +107,12 @@ public class Tile : MonoBehaviour
         //이 타일로 이동
         else if (moveTarget != -1)
         {
+            onTileObject = moveTarget;
             (int, int) startLoc = GameManager.Instance.playerList[moveTarget].GetComponent<Player>().playerIndex;
             GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().AdjTileDisable();
+            GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().onTileObject = -1;
+            Debug.Log(moveTarget);
+            moveTarget = -1;
             EventBus.MoveStart(startLoc, loc, false);
         }
         else if (onTileCandy == -1)
@@ -127,7 +131,7 @@ public class Tile : MonoBehaviour
         }
 
         //인접한 타일 초기화
-        AdjTileDisable();
+        //AdjTileDisable();
     }
 
     public void MovableSelect(int idx)
@@ -196,7 +200,6 @@ public class Tile : MonoBehaviour
 
     public virtual int Calculate(Tile adjTile, int index)
     {
-        Debug.Log("계산");
         bool toUp = index < 2;
         //bool toLeft = index % 2 == 0;
 
@@ -284,7 +287,7 @@ public class Tile : MonoBehaviour
             }
         }
 
-        Debug.Log($"{tileNum}, {adjTile.tileNum} 간 정의 필요");
+        //Debug.Log($"{tileNum}, {adjTile.tileNum} 간 정의 필요");
         return -1;
     }
 }
