@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviour
     void Awake()
     {
         GetComponent<Player>().playerMove += Move;
-        Debug.Log("구독");
+        //Debug.Log("구독");
     }
 
     private void OnDestroy()

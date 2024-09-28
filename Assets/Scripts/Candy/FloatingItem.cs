@@ -7,7 +7,7 @@ public class FloatingItem : MonoBehaviour
     public float floatSpeed = 1f;       // 떠다니는 속도
     public float startY;               // 초기 y 좌표값
 
-    public bool isCollected = false;
+    public bool isFloated = true;
 
     public float moveUpDistance = 1.0f; // 아이템이 위로 이동하는 거리
     public float duration = 1.0f; // 애니메이션 지속 시간
@@ -23,6 +23,16 @@ public class FloatingItem : MonoBehaviour
 
 
     float elapsedTime = 0f;
+
+    private void Awake()
+    {
+        GetComponent<Candy>().onCatch += CatchCandy;
+    }
+
+    private void OnDestroy()
+    {
+        GetComponent<Candy>().onCatch -= CatchCandy;
+    }
 
     void Start()
     {
@@ -41,7 +51,7 @@ public class FloatingItem : MonoBehaviour
 
     void Update()
     {
-        if (!isCollected)
+        if (isFloated)
         {
             // y 좌표를 Sin 함수를 이용해 주기적으로 변동
             float newY = startY + Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
@@ -62,8 +72,24 @@ public class FloatingItem : MonoBehaviour
 
             if (elapsedTime > duration)
             {
-                Destroy(gameObject);
+                newColor.a = 0;
+                spriteRenderer.color = newColor;
+
+                GetComponent<Candy>().isCatch = true;
+                isFloated = true;
             }
         }
+    }
+
+    void CatchCandy()
+    {
+        isFloated = false;
+    }
+
+    void UndoCandy()
+    {
+        GetComponent<Candy>().isCatch = false;
+        
+        spriteRenderer.color = initialColor;
     }
 }

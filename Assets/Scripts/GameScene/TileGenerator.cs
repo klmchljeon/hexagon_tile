@@ -114,6 +114,9 @@ public class TileGenerator : MonoBehaviour
                 tileList[loc.x, loc.y].GetComponent<Tile>().onTileCandy = i;
 
                 Vector3 candyPosition = (Vector3)(candyTile.GetComponent<Tile>().objectPosition);
+                candyObject.GetComponent<Candy>().candyIndex = (loc.x,loc.y);
+                candyObject.GetComponent<Candy>().color = candyInfo.color;
+                candyObject.GetComponent<Candy>().isCatch = false;
 
                 candyObject.transform.position = candyTile.transform.position + candyPosition;
                 candyObject.transform.SetParent(candyParent.transform, true);
@@ -139,7 +142,12 @@ public class TileGenerator : MonoBehaviour
 
                         if (CheckRange(nx,ny))
                         {
-                            if (tileList[nx, ny] == null) continue;
+                            if (tileList[nx, ny] == null)
+                            {
+                                Debug.Log((x, y,-1));
+                                continue;
+                            }
+                            
                             curTile.adjacentTiles[i] = tileList[nx,ny].GetComponent<Tile>();
                             curTile.adjacentIdx[i] = (nx, ny);
                         }

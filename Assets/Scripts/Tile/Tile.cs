@@ -91,16 +91,15 @@ public class Tile : MonoBehaviour
     {
         if (loc != this.loc) // && Array.IndexOf(adjacentIdx,loc) == -1)
         {
-            ResetSelect();
+            if (Array.IndexOf(adjacentIdx, loc) == -1)
+                ResetSelect();
+
             return;
         }
-
-        //Debug.Log(loc);
 
         //타일 회전
         if (rotateSelecting)
         {
-            //Rotate(loc);
             ResetSelect();
             EventBus.RotateStart(loc, false);
         }
@@ -111,27 +110,25 @@ public class Tile : MonoBehaviour
             (int, int) startLoc = GameManager.Instance.playerList[moveTarget].GetComponent<Player>().playerIndex;
             GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().AdjTileDisable();
             GameManager.Instance.tileList[startLoc.Item1, startLoc.Item2].GetComponent<Tile>().onTileObject = -1;
-            Debug.Log(moveTarget);
             moveTarget = -1;
             EventBus.MoveStart(startLoc, loc, false);
         }
-        else if (onTileCandy == -1)
+        else
         {
-            //타일 클릭(회전 선택)
-            if (onTileObject == -1)
-            {
-                RotatableSelect();
-            }
             //플레이어 클릭(이동 선택)
-            else
+            if (onTileObject != -1)
             {
                 AdjTileEnable(onTileObject);
                 return;
             }
+            //빈 타일 클릭(회전 선택)
+            else if (onTileCandy == -1)
+            {
+                RotatableSelect();
+            }
         }
 
-        //인접한 타일 초기화
-        //AdjTileDisable();
+        AdjTileDisable();
     }
 
     public void MovableSelect(int idx)
@@ -145,6 +142,13 @@ public class Tile : MonoBehaviour
     public void RotatableSelect()
     {
         ResetSelect();
+        if (cantRotate)
+        {
+            if (GetComponent<ShakeEffect>() != null)
+                GetComponent<ShakeEffect>().Shake();
+
+            return;
+        }
 
         originalScale = transform.localScale; // 원래 크기 저장
         transform.localScale = originalScale * 1.1f; // 크기 1.5배로 확대
@@ -170,6 +174,7 @@ public class Tile : MonoBehaviour
         {
             if (adjacentTiles[i] == null) continue;
             if (adjacentTiles[i].onTileObject != -1) continue;
+            if (costs[i] == -1) continue;
             if (costs[i] > GameManager.Instance.actionPoint) continue;
 
             adjacentTiles[i].MovableSelect(idx);
@@ -219,6 +224,7 @@ public class Tile : MonoBehaviour
             }
 
         }
+
         else if (adjTile.tileNum == 1)
         {
             if (toUp == isRotate)

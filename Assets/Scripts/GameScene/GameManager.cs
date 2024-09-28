@@ -51,14 +51,15 @@ public class GameManager : MonoBehaviour
     public int actionPoint;
     public int stageNum;
 
-    public int playerCount;
-    public int candyCount;
+    public int playerCount = 0;
+    public int candyCount = 0;
 
     //event
     public event Action UpdateUI;
     public event Action<(int, int), bool> TileRotate;
     public event Action<(int, int)> TileClick;
     public event Action<(int, int), (int, int), bool> moveStart;
+    public event Action<(int, int)> CheckCandy;
 
     //status
     public bool isMoving = false;
@@ -134,6 +135,7 @@ public class GameManager : MonoBehaviour
         isMoving = false;
         actionPoint -= cost;
 
+        CheckCandy?.Invoke(loc);
         UpdateUI?.Invoke();
         if (!GameEndCheck())
             TileClick(loc);
@@ -167,23 +169,6 @@ public class GameManager : MonoBehaviour
         {
             SelectTile();
         }
-
-        //if (player.GetComponent<PlayerMove>().moveEnd)
-        /*{
-            if (goalPosition == playerPosition)
-            {
-                candyCount--;
-            }
-
-            UpdateUI?.Invoke();
-            player.GetComponent<PlayerMove>().moveEnd = false;
-
-            SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true);
-
-            ReSelect(playerPosition);
-            GameEndCheck();
-            Debug.Log($"이동 끝 포인트: {actionPoint}");
-        }*/
     }
 
     bool GameEndCheck()
