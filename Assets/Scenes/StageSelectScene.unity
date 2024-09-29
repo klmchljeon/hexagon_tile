@@ -1894,8 +1894,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da78d2508b1c75e4fa2d1b707a0f0bb8, type: 2}
   - {fileID: 11400000, guid: f3a689eb250f80a4baa56edd47819aed, type: 2}
   - {fileID: 11400000, guid: db3f5c9fd08766345932093f0466796b, type: 2}
-  - {fileID: 11400000, guid: b9392ecf4fee1b542b286500e0f2ae45, type: 2}
-  - {fileID: 11400000, guid: 59d5463e723adcc47a6110a774bbbb4b, type: 2}
+  - {fileID: 11400000, guid: c6dfd0b713131d8459980a90c6a0dd52, type: 2}
   stageIndex: 0
   currentStageData: {fileID: 0}
 --- !u!4 &748071438
@@ -3966,7 +3965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1071080834
 RectTransform:
   m_ObjectHideFlags: 0
