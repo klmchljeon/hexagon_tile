@@ -86,6 +86,10 @@ public class FloatingItem : MonoBehaviour
             }
         }
     }
+    void Rotate(Vector2 objectPosition)
+    {
+        startY = objectPosition.y;
+    }
 
     void CatchCandy()
     {

@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         playerList = tileGen.playerList;
         candyList = tileGen.candyList;
         actionPoint = tileGen.actionPoint;
+        stageNum = tileGen.stageNum;
         for (int i = 0; i < 5; i++)
         {
             if (playerList[i] != null) playerCount++;
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
         moveStart?.Invoke(loc, loc2, isUndo);
     }
 
-    void MoveComplete((int, int) loc, int cost)
+    void MoveComplete((int, int) loc, int cost, bool isUndo)
     {
         Debug.Log("이동 완료");
         isMoving = false;
@@ -137,7 +138,7 @@ public class GameManager : MonoBehaviour
 
         CheckCandy?.Invoke(loc);
         UpdateUI?.Invoke();
-        if (!GameEndCheck())
+        if (!GameEndCheck() && !isUndo)
             TileClick(loc);
     }
 

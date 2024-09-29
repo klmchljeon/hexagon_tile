@@ -139,7 +139,7 @@ public class Tile : MonoBehaviour
                 return;
             }
             //빈 타일 클릭(회전 선택)
-            else if (onTileCandy == -1)
+            else if (onTileCandy == -1 || GameManager.Instance.candyList[onTileCandy].GetComponent<Candy>().isCatch)
             {
                 RotatableSelect();
             }

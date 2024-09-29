@@ -14,7 +14,7 @@ public class StatusUI : MonoBehaviour
 
     private void Awake()
     {
-        FirstUpdate();
+
     }
 
     private void OnEnable()
@@ -27,7 +27,7 @@ public class StatusUI : MonoBehaviour
         GameManager.Instance.UpdateUI -= UpdateUI;
     }
 
-    void FirstUpdate()
+    void UpdateUI()
     {
         if (GameManager.Instance.stageNum == 0)
         {
@@ -37,12 +37,6 @@ public class StatusUI : MonoBehaviour
         {
             stage.text = GameManager.Instance.stageNum.ToString();
         }
-        candyCount.text = GameManager.Instance.candyCount.ToString();
-        actionPoint.text = GameManager.Instance.actionPoint.ToString();
-    }
-
-    void UpdateUI()
-    {
         candyCount.text = GameManager.Instance.candyCount.ToString();
         actionPoint.text = GameManager.Instance.actionPoint.ToString();
     }

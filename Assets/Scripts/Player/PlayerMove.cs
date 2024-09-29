@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour
             timeElapsed = 0f;
             moveFlag = false;
             moveEnd = true;
-            EventBus.MoveComplete(GetComponent<Player>().playerIndex, cost);
+            EventBus.MoveComplete(GetComponent<Player>().playerIndex, cost, cost>0?false:true);
         }
     }
 
@@ -54,7 +54,7 @@ public class PlayerMove : MonoBehaviour
         EndPos = endPos;
         this.cost = cost;
         moveFlag = true;
-        Debug.Log("시작");
+        //Debug.Log("시작");
     }
 
     Vector3 GetParabolicPosition(Vector3 start, Vector3 end, float t)

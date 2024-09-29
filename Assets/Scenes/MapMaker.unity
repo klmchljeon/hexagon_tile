@@ -2318,8 +2318,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -281, y: -101}
-  m_SizeDelta: {x: 791.6565, y: 633.5813}
+  m_AnchoredPosition: {x: -314.19452, y: -101}
+  m_SizeDelta: {x: 725.2675, y: 633.5813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &566409885
 MonoBehaviour:
@@ -7696,7 +7696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectSelect: {fileID: 509513105}
   Map: {fileID: 566409883}
-  fileName: MapMaker1
+  fileName: Stage6
 --- !u!4 &2077617186
 Transform:
   m_ObjectHideFlags: 0

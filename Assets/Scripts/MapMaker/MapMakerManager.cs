@@ -178,7 +178,6 @@ public class MapMakerManager : MonoBehaviour
         }
 
         stageData.tileInfos[tileIdx].tileNum = type;
-        Debug.Log(type);
     }
 
     void TileRotate(int tileIdx)

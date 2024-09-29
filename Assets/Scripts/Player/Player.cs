@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
         //Debug.Log(end);
         for (int i = 0; i < curTile.adjacentIdx.Length; i++)
         {
-            Debug.Log(curTile.adjacentIdx[i]);
+            //Debug.Log(curTile.adjacentIdx[i]);
             if (end == curTile.adjacentIdx[i])
             {
                 idx = i;
