@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
@@ -20,3 +21,4 @@ public class SaveScriptableObjectAsJson : MonoBehaviour
         Debug.Log("ScriptableObject saved as JSON to: " + filePath);
     }
 }
+#endif

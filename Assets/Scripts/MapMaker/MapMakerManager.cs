@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -318,3 +319,4 @@ public class MapMakerManager : MonoBehaviour
         stageData.tileInfos[tileIdx].color = 0;
     }
 }
+#endif

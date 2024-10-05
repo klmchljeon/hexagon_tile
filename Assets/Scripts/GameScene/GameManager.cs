@@ -65,6 +65,10 @@ public class GameManager : MonoBehaviour
     public bool isMoving = false;
     public bool isRotating = false;
 
+    //touch
+    private Vector3 touchDownPosition = Vector3.forward;
+    private Vector3 nullPosition = Vector3.forward;
+
     public GameObject panel;
     public GameObject layerMask;
 
@@ -224,6 +228,42 @@ public class GameManager : MonoBehaviour
                 GameObject clickedObject = hit.collider.gameObject;
 
                 if (clickedObject.name[0] != 'T') 
+                {
+                    touchDownPosition = nullPosition;
+                    TileClick?.Invoke((-1, -1));
+                    return;
+                }
+
+                touchDownPosition = Input.mousePosition;
+                return;
+            }
+            else
+            {
+                touchDownPosition = nullPosition;
+                TileClick?.Invoke((-1, -1));
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0) && !layerMask.activeSelf)
+        {
+            if (touchDownPosition == nullPosition || Vector3.Distance(touchDownPosition, Input.mousePosition) > 100f)
+            {
+                touchDownPosition = nullPosition;
+                TileClick?.Invoke((-1, -1));
+                return;
+            }
+
+            Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 1f);
+
+
+            touchDownPosition = nullPosition;
+
+            if (hit.collider != null)
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+
+                if (clickedObject.name[0] != 'T')
                 {
                     TileClick?.Invoke((-1, -1));
                     return;
