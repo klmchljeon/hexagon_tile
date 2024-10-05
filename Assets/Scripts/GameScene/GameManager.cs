@@ -216,6 +216,13 @@ public class GameManager : MonoBehaviour
         fail.SetActive(true);
     }
 
+
+    //언젠가 수정하겠지
+    public void ResetClick()
+    {
+        TileClick?.Invoke((-1, -1));
+    }
+
     void SelectTile()
     {
         if (Input.GetMouseButtonDown(0) && !layerMask.activeSelf)
@@ -230,7 +237,7 @@ public class GameManager : MonoBehaviour
                 if (clickedObject.name[0] != 'T') 
                 {
                     touchDownPosition = nullPosition;
-                    TileClick?.Invoke((-1, -1));
+                    ResetClick();
                     return;
                 }
 
@@ -240,7 +247,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 touchDownPosition = nullPosition;
-                TileClick?.Invoke((-1, -1));
+                ResetClick();
             }
         }
 
@@ -249,7 +256,7 @@ public class GameManager : MonoBehaviour
             if (touchDownPosition == nullPosition || Vector3.Distance(touchDownPosition, Input.mousePosition) > 100f)
             {
                 touchDownPosition = nullPosition;
-                TileClick?.Invoke((-1, -1));
+                ResetClick();
                 return;
             }
 
@@ -265,7 +272,7 @@ public class GameManager : MonoBehaviour
 
                 if (clickedObject.name[0] != 'T')
                 {
-                    TileClick?.Invoke((-1, -1));
+                    ResetClick();
                     return;
                 }
 
@@ -277,7 +284,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                TileClick?.Invoke((-1, -1));
+                ResetClick();
             }
         }
     }

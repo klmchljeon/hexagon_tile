@@ -101,8 +101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d77e2f8ee4fc34b9e975767faa8e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationAngle: 300
+  _rotationAngle: 60
   _tileNum: 1
+  cantRotate: 0
+  isRotate: 0
+  rotateSelecting: 0
+  moveTarget: -1
+  onTileObject: -1
+  onTileCandy: -1
   MovableEffect: {fileID: 8185636625525826335}
   adjacentTiles:
   - {fileID: 0}
@@ -110,10 +116,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   costs: 00000000000000000000000000000000
-  cantRotate: 0
-  isRotate: 0
+  rotateCost: 1
   objectPosition: {x: 0, y: 0}
-  _childRotationAngle: 300
+  _childRotationAngle: 60
   _childTileNum: 1
 --- !u!114 &5623585218044560904
 MonoBehaviour:
@@ -128,7 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRotating: 0
-  RotateEnd: 0
 --- !u!114 &-7212812461521828888
 MonoBehaviour:
   m_ObjectHideFlags: 0

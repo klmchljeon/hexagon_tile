@@ -26,6 +26,8 @@ public class UndoButton : MonoBehaviour
         if (GameManager.Instance.actionStack.Count == 0)
             return;
 
+        GameManager.Instance.ResetClick();
+
         PuzzleActionData action = GameManager.Instance.actionStack.Pop();
         if (action.ActionType == ActionType.Move)
         {

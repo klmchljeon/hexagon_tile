@@ -52,17 +52,22 @@ public class Tile : MonoBehaviour
     {
         isRotate = true;
         objectPosition = -objectPosition;
-        transform.eulerAngles = new Vector3(0, 0, 360f - rotationAngle);
+        transform.eulerAngles = new Vector3(0, 0, tileNum!=1?180f:60f);
     }
     
-    public void Rotate((int,int) loc, bool isUndo)
+    public virtual void Rotate((int,int) loc, bool isUndo)
     {
         if (loc != this.loc) return;
 
         isRotate ^= true;
         objectPosition = -objectPosition;
-        isRotateChanged?.Invoke(isRotate?(360f-rotationAngle):rotationAngle, isUndo);
+        RotateInvoke(360f - rotationAngle, rotationAngle, isUndo);
         UpdateCost();
+    }
+
+    protected void RotateInvoke(float firstAngle, float secondAngle, bool isUndo)
+    {
+        isRotateChanged?.Invoke(isRotate^isUndo ? firstAngle : secondAngle, isUndo);
     }
 
     private void Awake()

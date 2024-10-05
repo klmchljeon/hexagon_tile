@@ -39,8 +39,8 @@ public class TileRotate : MonoBehaviour
     public void RotateAnimate(float targetAngle, bool isUndo)
     {
         startAngle = transform.eulerAngles.z; // 현재 Z축의 시작 각도
-        endAngle = startAngle + targetAngle; // 목표 각도 계산
-
+        endAngle = startAngle + targetAngle*(isUndo?1:-1); // 목표 각도 계산
+        Debug.Log((startAngle, endAngle));
         elapsedTime = 0f; // 경과 시간 초기화
         isRotating = true;
 

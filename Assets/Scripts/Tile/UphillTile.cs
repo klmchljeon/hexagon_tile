@@ -20,6 +20,15 @@ public class UphillTile : Tile
         set { _childTileNum = value; }
     }
 
+    public override void Rotate((int, int) loc, bool isUndo)
+    {
+        if (loc != this.loc) return;
+
+        isRotate ^= true;
+        objectPosition = -objectPosition;
+        RotateInvoke(180f - rotationAngle, rotationAngle, isUndo);
+        UpdateCost();
+    }
 
     public override int Calculate(Tile adjTile, int index)
     {
