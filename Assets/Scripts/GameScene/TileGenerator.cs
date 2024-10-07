@@ -24,6 +24,7 @@ public class TileGenerator : MonoBehaviour
     public GameObject[,] tileList = new GameObject[6, 6];
     public GameObject[] playerList = new GameObject[5];
     public GameObject[] candyList = new GameObject[5];
+    public Vector3Int starCount;
     public int actionPoint;
     public int stageNum;
 
@@ -155,6 +156,7 @@ public class TileGenerator : MonoBehaviour
                     curTile.UpdateCost();
                 }
             }
+            starCount = stageData.starCount;
             actionPoint = stageData.actionPoint;
             stageNum = stageData.stageNumber;
         }

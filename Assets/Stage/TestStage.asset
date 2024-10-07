@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: TestStage
   m_EditorClassIdentifier: 
   stageNumber: 0
-  height: 0
-  width: 0
-  actionPoint: 20
+  starCount: {x: 2, y: 5, z: 10}
+  actionPoint: 4
   tileInfos:
   - tileNum: 10
     cantRotate: 1

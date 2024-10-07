@@ -197,7 +197,7 @@ public class Tile : MonoBehaviour
             if (adjacentTiles[i] == null) continue;
             if (adjacentTiles[i].onTileObject != -1) continue;
             if (costs[i] == -1) continue;
-            if (costs[i] > GameManager.Instance.actionPoint) continue;
+            //if (costs[i] > GameManager.Instance.actionPoint) continue;
 
             adjacentTiles[i].MovableSelect(idx);
         }

@@ -6,8 +6,7 @@ public class StageData : ScriptableObject
 {
     public int stageNumber;
 
-    public int height;
-    public int width;
+    public Vector3Int starCount;
 
     public int actionPoint;
 

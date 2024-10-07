@@ -38,6 +38,14 @@ public class StatusUI : MonoBehaviour
             stage.text = GameManager.Instance.stageNum.ToString();
         }
         candyCount.text = GameManager.Instance.candyCount.ToString();
-        actionPoint.text = GameManager.Instance.actionPoint.ToString();
+
+        if (GameManager.Instance.actionPoint < 0)
+        {
+            actionPoint.text = "초과!";
+        }
+        else
+        {
+            actionPoint.text = GameManager.Instance.actionPoint.ToString();
+        }
     }
 }

@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum ActionType
 {
@@ -48,6 +46,7 @@ public class GameManager : MonoBehaviour
     public GameObject[,] tileList = new GameObject[6, 6];
     public GameObject[] playerList = new GameObject[5];
     public GameObject[] candyList = new GameObject[5];
+    public Vector3Int starCount;
     public int actionPoint;
     public int stageNum;
 
@@ -60,6 +59,7 @@ public class GameManager : MonoBehaviour
     public event Action<(int, int)> TileClick;
     public event Action<(int, int), (int, int), bool> moveStart;
     public event Action<(int, int)> CheckCandy;
+    public event Action<int, Vector3Int> GameEnd;
 
     //status
     public bool isMoving = false;
@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
         tileList = tileGen.tileList;
         playerList = tileGen.playerList;
         candyList = tileGen.candyList;
+        starCount = tileGen.starCount;
         actionPoint = tileGen.actionPoint;
         stageNum = tileGen.stageNum;
         for (int i = 0; i < 5; i++)
@@ -164,7 +165,6 @@ public class GameManager : MonoBehaviour
         actionPoint -= cost;
 
         UpdateUI?.Invoke();
-        GameEndCheck();
     }
 
     void Update()
@@ -178,29 +178,20 @@ public class GameManager : MonoBehaviour
 
     bool GameEndCheck()
     {
-        bool flag = false;
         if (candyCount == 0)
         {
-            panel.SetActive(true);
-            layerMask.SetActive(true);
+            GameEnd?.Invoke(actionPoint, starCount);
+            return true;
 
-            GameObject clear = panel.transform.Find("Clear").gameObject;
+            //panel.SetActive(true);
+            //layerMask.SetActive(true);
 
-            Clear(clear);
-            flag = true;
-        }
-        else if (actionPoint == 0)
-        {
-            panel.SetActive(true);
-            layerMask.SetActive(true);
+            //GameObject clear = panel.transform.Find("Clear").gameObject;
 
-            GameObject fail = panel.transform.Find("Fail").gameObject;
-
-            GameOver(fail);
-            flag = true;
+            //Clear(clear);
         }
 
-        return flag;
+        return false;
     }
 
     void Clear(GameObject clear)
@@ -209,11 +200,6 @@ public class GameManager : MonoBehaviour
         //goal.GetComponent<FloatingItem>().isCollected = true;
 
         clear.SetActive(true);
-    }
-
-    void GameOver(GameObject fail)
-    {
-        fail.SetActive(true);
     }
 
 

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Stage4
   m_EditorClassIdentifier: 
   stageNumber: 4
-  height: 0
-  width: 0
+  starCount: {x: 0, y: 3, z: 5}
   actionPoint: 25
   tileInfos:
   - tileNum: 10
