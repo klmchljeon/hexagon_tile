@@ -13,70 +13,15 @@ MonoBehaviour:
   m_Name: MapMaker1
   m_EditorClassIdentifier: 
   stageNumber: 0
-  starCount: {x: 0, y: 3, z: 5}
+  starCount: {x: 2, y: 6, z: 10}
   actionPoint: 20
   tileInfos:
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
   - tileNum: 0
     cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
   - tileNum: 0
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
     cantRotate: 1
     isRotate: 0
     color: 0
@@ -89,6 +34,61 @@ MonoBehaviour:
   - tileNum: 2
     cantRotate: 0
     isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 2
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 0
     color: 0
     buttons: 000000
   - tileNum: 3
@@ -96,7 +96,62 @@ MonoBehaviour:
     isRotate: 1
     color: 0
     buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
   - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 2
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 2
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 2
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 2
     cantRotate: 0
     isRotate: 1
     color: 0
@@ -111,7 +166,17 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 2
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
     cantRotate: 0
     isRotate: 0
     color: 0
@@ -122,97 +187,32 @@ MonoBehaviour:
     color: 0
     buttons: 000000
   - tileNum: 0
-    cantRotate: 1
-    isRotate: 0
+    cantRotate: 0
+    isRotate: 1
     color: 0
     buttons: 000000
   - tileNum: 0
     cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
   playerInfos:
-  - loc: {x: 1, y: 2}
+  - loc: {x: 1, y: 5}
     color: 0
   - loc: {x: 0, y: 1}
     color: 0
-  - loc: {x: 1, y: 3}
+  - loc: {x: 2, y: 2}
     color: 0
-  - loc: {x: 1, y: 1}
+  - loc: {x: -1, y: -1}
     color: 0
   - loc: {x: -1, y: -1}
     color: 0
   candyInfos:
-  - loc: {x: 4, y: 2}
+  - loc: {x: 0, y: 4}
     color: 0
-  - loc: {x: 5, y: 2}
+  - loc: {x: 2, y: 1}
     color: 0
-  - loc: {x: -1, y: -1}
+  - loc: {x: 5, y: 1}
     color: 0
   - loc: {x: -1, y: -1}
     color: 0

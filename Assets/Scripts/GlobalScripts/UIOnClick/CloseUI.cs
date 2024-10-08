@@ -20,7 +20,14 @@ public class CloseUI : MonoBehaviour
     {
         if (IsPointerOverUIObject() && !IsPointerOverChildUI())
         {
-            gameObject.SetActive(false);
+            if (GetComponent<UIActiveStateMonitor>() != null)
+            {
+                GetComponent<UIActiveStateMonitor>().SetUIActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 

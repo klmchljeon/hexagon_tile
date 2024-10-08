@@ -9,6 +9,7 @@ public class StatusUI : MonoBehaviour
     public TextMeshProUGUI stage;
     public TextMeshProUGUI candyCount;
     public TextMeshProUGUI actionPoint;
+    public GameObject lockOb;
 
     public StageData TestStage;
 
@@ -42,10 +43,17 @@ public class StatusUI : MonoBehaviour
         if (GameManager.Instance.actionPoint < 0)
         {
             actionPoint.text = "초과!";
+            if (!lockOb.activeSelf)
+                lockOb.SetActive(true);
+
+            lockOb.GetComponent<UIShakeEffect>().Shake();
+                
         }
         else
         {
             actionPoint.text = GameManager.Instance.actionPoint.ToString();
+            if (lockOb.activeSelf)
+                lockOb.SetActive(false);
         }
     }
 }

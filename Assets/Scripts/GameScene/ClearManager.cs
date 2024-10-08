@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ClearManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ClearManager : MonoBehaviour
     [SerializeField] GameObject layerMask;
     [SerializeField] GameObject startPanel;
     [SerializeField] Sprite star;
+    [SerializeField] GameObject nextStageButton;
 
     void Start()
     {
@@ -22,10 +24,16 @@ public class ClearManager : MonoBehaviour
         panel.SetActive(true);
         layerMask.SetActive(true);
 
+        if (StageManager.Instance.stageIndex == StageManager.Instance.stageDatas.Length - 1)
+        {
+            NextButtonDisable();
+        }
+
         int cnt;
         if (ap < 0)
         {
             cnt = 0;
+            NextButtonDisable();
         }
         else if (ap <= starCount.x)
         {
@@ -45,6 +53,7 @@ public class ClearManager : MonoBehaviour
             cnt = 3;
         }
 
+        StarManager.Instance.Clear(GameManager.Instance.stageNum, cnt);
         StartCoroutine(StarCountCoroutine(cnt));
     }
 
@@ -56,5 +65,13 @@ public class ClearManager : MonoBehaviour
 
             startPanel.transform.GetChild(i).GetComponent<Image>().sprite = star;
         }
+    }
+
+    void NextButtonDisable()
+    {
+        nextStageButton.GetComponent<Button>().interactable = false;
+        Color txtColor = nextStageButton.GetComponentInChildren<TMP_Text>().color;
+        txtColor.a = 0.5f;
+        nextStageButton.GetComponentInChildren<TMP_Text>().color = txtColor;
     }
 }
