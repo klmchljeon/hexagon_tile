@@ -14,7 +14,7 @@ public class StageLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Stage {i+1} not found. Make sure the file exists in the Resources/Stage folder.");
+            Debug.Log($"Stage {i+1} not found. Make sure the file exists in the Resources/Stage folder.");
             return null;
         }
     }
