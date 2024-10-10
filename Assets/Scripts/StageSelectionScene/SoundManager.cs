@@ -131,10 +131,10 @@ public class SoundManager : MonoBehaviour
         SaveData();
     }
 
-    public void PlaySound(AudioClip clip, AudioSource source, bool isSFX = true)
+    public void PlaySound(AudioClip clip, AudioSource source, bool isSFX = true, float SFXoffset = 1f)
     {
         source.clip = clip;
-        source.volume = isSFX ? sfxVolume * masterVolume : musicVolume * masterVolume;
+        source.volume = isSFX ? SFXoffset * sfxVolume * masterVolume : musicVolume * masterVolume;
         source.Play();
     }
 }

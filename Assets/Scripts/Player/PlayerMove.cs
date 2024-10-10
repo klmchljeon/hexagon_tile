@@ -45,6 +45,7 @@ public class PlayerMove : MonoBehaviour
             moveFlag = false;
             moveEnd = true;
             EventBus.MoveComplete(GetComponent<Player>().playerIndex, cost, cost>0?false:true);
+            SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true);
         }
     }
 

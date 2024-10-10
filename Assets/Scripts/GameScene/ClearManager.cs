@@ -65,6 +65,7 @@ public class ClearManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             startPanel.transform.GetChild(i).GetComponent<Image>().sprite = star;
+            SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true, 0.2f);
         }
     }
 

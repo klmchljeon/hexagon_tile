@@ -38,6 +38,7 @@ public class Candy : MonoBehaviour
                 GameManager.Instance.candyCount--;
                 StackLogChange();
                 onCatch?.Invoke();
+                SoundManager.instance.PlaySound(GetComponent<AudioSource>().clip, GetComponent<AudioSource>(), true, 0.15f);
             }
         }
     }
