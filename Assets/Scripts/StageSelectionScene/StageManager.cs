@@ -1,10 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
-
-    public StageData[] stageDatas;
 
     public int stageIndex;
 

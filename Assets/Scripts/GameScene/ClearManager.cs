@@ -24,7 +24,8 @@ public class ClearManager : MonoBehaviour
         panel.SetActive(true);
         layerMask.SetActive(true);
 
-        if (StageManager.Instance.stageIndex == StageManager.Instance.stageDatas.Length - 1)
+        
+        if (StageLoader.LoadStage(StageManager.Instance.stageIndex + 1) == null)
         {
             NextButtonDisable();
         }

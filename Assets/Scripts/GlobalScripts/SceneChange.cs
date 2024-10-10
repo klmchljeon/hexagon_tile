@@ -9,6 +9,9 @@ public class SceneChange : MonoBehaviour
     [SerializeField]
     protected string sceneName;
 
+    public Image fadeImage; // 검은 배경이 될 Image (UI 요소)
+    public float fadeDuration = 0.5f; // 페이드 지속 시간
+
     protected virtual void OnEnable()
     {
         GetComponent<Button>().onClick.AddListener(TransitionToScene);
@@ -18,8 +21,6 @@ public class SceneChange : MonoBehaviour
         GetComponent<Button>().onClick.RemoveListener(TransitionToScene);
     }
 
-    public Image fadeImage; // 검은 배경이 될 Image (UI 요소)
-    public float fadeDuration = 0.5f; // 페이드 지속 시간
 
     protected virtual void Start()
     {

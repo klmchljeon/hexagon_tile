@@ -6,18 +6,15 @@ using UnityEngine.UI;
 public class FillStar : MonoBehaviour
 {
     [SerializeField]
-    private GameObject stagePanel;
-
-    [SerializeField]
     private Sprite star;
 
     // Start is called before the first frame update
     void Start()
     {
-        starEnable();
+
     }
 
-    void starEnable()
+    public void starEnable(GameObject stagePanel)
     {
         string prefix = "Stage";
         bool flag = false;
