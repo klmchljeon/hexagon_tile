@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: d84c4608002a44d4c9f80dcf8cba9eb2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d62a4656c7c894a4fbb6347139b8085f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,6 +103,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationAngle: 180
   _tileNum: 2
+  cantRotate: 0
+  isRotate: 0
+  rotateSelecting: 0
+  moveTarget: -1
+  onTileObject: -1
+  onTileCandy: -1
   MovableEffect: {fileID: 2841628522211018672}
   adjacentTiles:
   - {fileID: 0}
@@ -110,8 +116,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   costs: 00000000000000000000000000000000
-  cantRotate: 0
-  isRotate: 0
+  rotateCost: 1
   objectPosition: {x: 0, y: 0.5}
   _childTileNum: 2
 --- !u!114 &5623585218044560904
@@ -127,7 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRotating: 0
-  RotateEnd: 0
 --- !u!114 &3122205556605361578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +182,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.8188976, y: 2.0787401}
+    oldSize: {x: 2.07, y: 2.4}
     newSize: {x: 4.67, y: 5.34}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

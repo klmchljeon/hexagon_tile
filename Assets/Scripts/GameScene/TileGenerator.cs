@@ -178,16 +178,19 @@ public class TileGenerator : MonoBehaviour
 
     Vector3 CalculatePosition(int x, int y, Vector3 offset)
     {
-        Vector3 res = new Vector3(-3 * tileWidth, -2.5f * tileHeight * 0.74f, 0);
+        Vector3 res = new Vector3(-3f * tileWidth, -2.5f * tileHeight * 0.74f, 0);
 
+        Vector3 vec;
         if (y%2 == 0)
         {
-            res += new Vector3(x * tileWidth, y * tileHeight * 0.74f, 0);
+            vec = new Vector3(x * tileWidth, y * tileHeight * 0.74f, 0);
         }
         else
         {
-            res += new Vector3((x+0.5f) * tileWidth, y * tileHeight * 0.74f, 0);
+            vec = new Vector3((x + 0.5f) * tileWidth, y * tileHeight * 0.74f, 0);
         }
+
+        res += vec * 0.985f;
 
         return res + offset;
     }
