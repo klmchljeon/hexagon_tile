@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -13,19 +14,29 @@ public class UIManager : MonoBehaviour
             // 활성화된 UIActiveStateMonitor를 가진 오브젝트를 찾는다
             UIActiveStateMonitor[] monitors = FindObjectsOfType<UIActiveStateMonitor>();
 
+            UIActiveStateMonitor p = null;
+            int cnt = 0;
             // 활성화된 가장 앞에 있는 오브젝트를 찾기 위해 반복
             foreach (var monitor in monitors)
             {
                 if (monitor.gameObject.activeInHierarchy)
                 {
-                    // 가장 앞에 있는 활성화된 오브젝트를 비활성화
-                    monitor.SetUIActive(false);
-                    return; // 작업을 수행한 후, 더 이상 탐색하지 않음
+                    p = monitor;
+                    cnt++;
                 }
             }
 
-            // 만약 활성화된 UIActiveStateMonitor를 가진 오브젝트가 없다면 다른 동작 수행
-            PerformAlternativeAction();
+            if (p == null)
+            {
+                // 만약 활성화된 UIActiveStateMonitor를 가진 오브젝트가 없다면 다른 동작 수행
+                PerformAlternativeAction();
+            }
+            else
+            {
+                // 가장 앞에 있는 활성화된 오브젝트를 비활성화
+                p.SetUIActive(false);
+                if (cnt == 1 && layerMask != null) layerMask.SetActive(false);
+            }
         }
     }
 

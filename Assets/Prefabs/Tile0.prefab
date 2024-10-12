@@ -117,7 +117,7 @@ MonoBehaviour:
   - {fileID: 0}
   costs: 00000000000000000000000000000000
   rotateCost: 1
-  objectPosition: {x: 0, y: 0.5}
+  objectPosition: {x: 0, y: 0.6}
 --- !u!114 &5623585218044560904
 MonoBehaviour:
   m_ObjectHideFlags: 0

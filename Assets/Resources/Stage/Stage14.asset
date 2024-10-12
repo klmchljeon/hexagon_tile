@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage14
   m_EditorClassIdentifier: 
   stageNumber: 14
-  starCount: {x: 0, y: 2, z: 4}
+  starCount: {x: 1, y: 3, z: 4}
   actionPoint: 20
   tileInfos:
   - tileNum: 10

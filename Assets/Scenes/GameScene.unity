@@ -5181,9 +5181,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1833754966}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 1833754973}
+        m_TargetAssemblyTypeName: UIActiveStateMonitor, Assembly-CSharp
+        m_MethodName: SetUIActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
