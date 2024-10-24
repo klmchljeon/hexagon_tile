@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraMoving : MonoBehaviour
-{        
+{
+    [SerializeField] private GameObject BG;
+    [SerializeField] private GameObject layer;
+
     // 상수 : 이동 관련
     private const float DirectionForceReduceRate = 0.935f; // 감속비율
-    private const float DirectionForceMin = 0.001f; // 설정치 이하일 경우 움직임을 멈춤
+    public float DirectionForceMin; // 설정치 이하일 경우 움직임을 멈춤
 
     // 변수 : 이동 관련
     private bool _userMoveInput; // 현재 조작을 하고있는지 확인을 위한 변수
@@ -27,6 +31,8 @@ public class CameraMoving : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (layer.activeSelf) return;
+
         // 카메라 포지션 이동
         ControlCameraPosition();
 
@@ -113,5 +119,6 @@ public class CameraMoving : MonoBehaviour
             ) ;
 
         transform.position = Vector3.Lerp(currentPosition, targetPosition, 0.5f);
+        BG.transform.position = Vector3.Lerp(currentPosition, targetPosition, 0.5f) / 2;
     }
 }

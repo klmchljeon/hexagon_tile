@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d474ce9751b0344814dfcba5e7a17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: {fileID: 0}
 --- !u!114 &206600318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1724,7 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbd2bf8f02876f479a6714a2ecd4708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageIndex: 0
+  stageIndex: -1
   currentStageData: {fileID: 0}
 --- !u!4 &748071438
 Transform:
@@ -2851,9 +2852,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1167210981}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 1167210987}
+        m_TargetAssemblyTypeName: UIActiveStateMonitor, Assembly-CSharp
+        m_MethodName: SetUIActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3335,6 +3336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ab9f9f44d0b2d40a28ff6733cec212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelExit: {fileID: 1167210981}
   panel: {fileID: 1143988536}
   stage: {fileID: 1876263162612347213, guid: a7d0eace8166b0c49b6dfeeaf4efc57a, type: 3}
   stageCnt: 20
@@ -3692,6 +3694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d474ce9751b0344814dfcba5e7a17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: {fileID: 0}
 --- !u!114 &1167210984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5894,9 +5897,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1858164253}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 1858164259}
+        m_TargetAssemblyTypeName: UIActiveStateMonitor, Assembly-CSharp
+        m_MethodName: SetUIActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6187,6 +6190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d474ce9751b0344814dfcba5e7a17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: {fileID: 0}
 --- !u!114 &1858164259
 MonoBehaviour:
   m_ObjectHideFlags: 0

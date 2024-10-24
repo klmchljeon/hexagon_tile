@@ -55,6 +55,7 @@ public class SceneChange : MonoBehaviour
                 // 씬 로딩 완료되면 allowSceneActivation을 true로 설정해 씬을 전환
                 asyncLoad.allowSceneActivation = true;
             }
+
             yield return null;
         }
     }

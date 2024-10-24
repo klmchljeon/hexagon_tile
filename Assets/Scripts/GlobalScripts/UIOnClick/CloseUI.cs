@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class CloseUI : MonoBehaviour
 {
+    [SerializeField] GameObject layer;
+
     private void OnEnable()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(ClosePanel);
@@ -27,6 +29,11 @@ public class CloseUI : MonoBehaviour
             else
             {
                 gameObject.SetActive(false);
+            }
+
+            if (layer != null)
+            {
+                layer.SetActive(false);
             }
         }
     }

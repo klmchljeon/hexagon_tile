@@ -6,6 +6,7 @@ using TMPro;
 
 public class StagePanelGenerator : MonoBehaviour
 {
+    [SerializeField] private GameObject panelExit;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject stage;
     [SerializeField] private int stageCnt;
@@ -17,6 +18,11 @@ public class StagePanelGenerator : MonoBehaviour
     {
         fadeImage = FindInactiveUIObject<Image>("FadeImage");
         Generate(stageCnt);
+
+        if (StageManager.Instance.stageIndex != -1)
+        {
+            panelExit.GetComponent<UIActiveStateMonitor>().SetUIActive(true);
+        }
     }
 
     void Generate(int n)
