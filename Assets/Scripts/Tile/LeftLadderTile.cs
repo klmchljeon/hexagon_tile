@@ -127,9 +127,20 @@ public class LeftLadderTile : Tile
         }
         else if (adjTile.tileNum == 3)
         {
-            if (isRotate != adjTile.isRotate)
+            if (isRotate == adjTile.isRotate)
             {
-                if (!isRotate == toUp)
+                if (index % 2 == (isRotate ? 1 : 0))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+            }
+            else
+            {
+                if (((index == 0) | (index == 1)) ^ isRotate)
                 {
                     return 1;
                 }
@@ -137,18 +148,6 @@ public class LeftLadderTile : Tile
                 {
                     return -1;
                 }
-            }
-            else if (adjTile.isRotate && index == 3)
-            {
-                return 1;
-            }
-            else if (!adjTile.isRotate && index == 0)
-            {
-                return 1;
-            }
-            else 
-            {
-                return 2;
             }
         }
 
