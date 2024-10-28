@@ -52,6 +52,8 @@ public class JsonToAssetEditor : EditorWindow
                 // JSON 데이터를 ScriptableObject에 덮어씌움
                 JsonConvert.PopulateObject(jsonData, stageData);
 
+                stageData.name = fileName;
+
                 // 에셋 파일에 변경된 ScriptableObject 저장
                 EditorUtility.SetDirty(stageData);
                 AssetDatabase.SaveAssets();
