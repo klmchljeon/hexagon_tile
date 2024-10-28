@@ -7,7 +7,7 @@ using TMPro;
 public class StagePanelGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject panelExit;
-    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject[] panel;
     [SerializeField] private GameObject stage;
     [SerializeField] private int stageCnt;
 
@@ -18,40 +18,36 @@ public class StagePanelGenerator : MonoBehaviour
     {
         fadeImage = FindInactiveUIObject<Image>("FadeImage");
         Generate(stageCnt);
-
-        if (StageManager.Instance.stageIndex != -1)
-        {
-            panelExit.GetComponent<UIActiveStateMonitor>().SetUIActive(true);
-        }
     }
 
     void Generate(int n)
     {
         int cnt = 0;
-
-        for (int i = 0; i < 4; i++)
+        for (int chap = 0; chap < 2; chap++)
         {
-            for (int j = 0; j < 5; j++)
+            for (int i = 0; i < 4; i++)
             {
-                if (cnt == n) break;
-                cnt++;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (cnt == n) break;
+                    cnt++;
 
-                GameObject stageUI = Instantiate(stage);
-                stageUI.transform.SetParent(panel.transform);
+                    GameObject stageUI = Instantiate(stage);
+                    stageUI.transform.SetParent(panel[chap].transform);
 
-                Vector3 pos = new Vector3(-460f, 240f, 0);
-                pos += new Vector3(230f * j, -165 * i, 0);
+                    Vector3 pos = new Vector3(-460f, 250f, 0);
+                    pos += new Vector3(230f * j, -165 * i, 0);
 
-                stageUI.GetComponent<RectTransform>().anchoredPosition = pos;
-                stageUI.name = $"Stage{cnt}";
-                stageUI.GetComponentInChildren<TMP_Text>().text = $"{cnt}";
+                    stageUI.GetComponent<RectTransform>().anchoredPosition = pos;
+                    stageUI.name = $"Stage{cnt}";
+                    stageUI.GetComponentInChildren<TMP_Text>().text = $"{cnt}";
 
-                stageUI.GetComponent<StageButton>().idx = cnt - 1;
-                stageUI.GetComponent<SceneChange>().fadeImage = fadeImage;
+                    stageUI.GetComponent<StageButton>().idx = cnt - 1;
+                    stageUI.GetComponent<SceneChange>().fadeImage = fadeImage;
+                }
             }
+            GetComponent<FillStar>().starEnable(panel[chap]);
         }
-
-        GetComponent<FillStar>().starEnable(panel);
     }
 
     private T FindInactiveUIObject<T>(string name) where T : Component

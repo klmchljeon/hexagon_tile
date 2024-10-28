@@ -11,7 +11,7 @@ public class StageButton : SceneChange
     {
         // 클릭된 버튼의 StageData를 StageManager에 저장
         StageManager.Instance.stageIndex = idx;
-        StageManager.Instance.currentStageData = StageLoader.LoadStage(idx);
+        StageManager.Instance.currentStageData = StageLoader.LoadStage(idx/20,idx%20);
 
         // 게임 씬으로 이동
         StartCoroutine(FadeOutAndLoadScene());

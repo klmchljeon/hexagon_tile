@@ -24,8 +24,8 @@ public class ClearManager : MonoBehaviour
         panel.SetActive(true);
         layerMask.SetActive(true);
 
-        
-        if (StageLoader.LoadStage(StageManager.Instance.stageIndex + 1) == null)
+
+        if (StageManager.Instance != null && StageLoader.LoadStage((StageManager.Instance.stageIndex + 1) / 20, (StageManager.Instance.stageIndex + 1) % 20) == null) 
         {
             NextButtonDisable();
         }
@@ -54,7 +54,10 @@ public class ClearManager : MonoBehaviour
             cnt = 3;
         }
 
-        StarManager.Instance.Clear(GameManager.Instance.stageNum, cnt);
+        if (StageManager.Instance != null)
+        {
+            StarManager.Instance.Clear(GameManager.Instance.stageNum, cnt);
+        }
         StartCoroutine(StarCountCoroutine(cnt));
     }
 
