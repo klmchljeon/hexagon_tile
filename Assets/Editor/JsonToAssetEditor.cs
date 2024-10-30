@@ -47,7 +47,13 @@ public class JsonToAssetEditor : EditorWindow
             // 에셋 파일에서 ScriptableObject를 불러옴
             StageData stageData = AssetDatabase.LoadAssetAtPath<StageData>(assetFilePath);
 
-            if (stageData != null)
+            if (stageData == null)
+            {
+                ScriptableObjectUtility.CreateOrLoadScriptableObject<StageData>(assetFilePath);
+                Debug.Log("Failed to load asset at: " + assetFilePath + ", 새로 생성.");
+                Debug.LogWarning("다시 저장 버튼을 눌러주세요");
+            }
+            else
             {
                 // JSON 데이터를 ScriptableObject에 덮어씌움
                 JsonConvert.PopulateObject(jsonData, stageData);
@@ -60,10 +66,6 @@ public class JsonToAssetEditor : EditorWindow
                 AssetDatabase.Refresh();
 
                 Debug.Log("ScriptableObject updated from JSON and saved to asset file: " + assetFilePath);
-            }
-            else
-            {
-                Debug.LogError("Failed to load asset at: " + assetFilePath);
             }
         }
         else

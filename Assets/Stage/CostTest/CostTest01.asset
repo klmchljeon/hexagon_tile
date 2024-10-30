@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 183fba758f070d44d980c0c3313c09dc, type: 3}
-  m_Name: MapMaker1
+  m_Name: CostTest01
   m_EditorClassIdentifier: 
   stageNumber: 0
   starCount: {x: 0, y: 0, z: 0}
@@ -21,12 +21,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
@@ -36,12 +36,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
@@ -81,12 +81,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
@@ -96,22 +96,22 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
@@ -121,12 +121,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
@@ -166,12 +166,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
@@ -181,12 +181,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 3
+  - tileNum: 1
     cantRotate: 0
     isRotate: 0
     color: 0

@@ -22,6 +22,8 @@ public class StagePanelGenerator : MonoBehaviour
 
     void Generate(int n)
     {
+        GetComponent<FillStar>().flag = false;
+
         int cnt = 0;
         for (int chap = 0; chap < 2; chap++)
         {

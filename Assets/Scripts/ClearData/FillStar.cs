@@ -8,6 +8,8 @@ public class FillStar : MonoBehaviour
     [SerializeField]
     private Sprite star;
 
+    public bool flag = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,6 @@ public class FillStar : MonoBehaviour
     public void starEnable(GameObject stagePanel)
     {
         string prefix = "Stage";
-        bool flag = false;
 
         for (int i = 0; i < stagePanel.transform.childCount; i++)
         {
