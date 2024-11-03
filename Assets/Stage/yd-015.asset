@@ -81,8 +81,8 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
+  - tileNum: 10
+    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
@@ -126,8 +126,8 @@ MonoBehaviour:
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
+  - tileNum: 10
+    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
