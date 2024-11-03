@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Stage13
   m_EditorClassIdentifier: 
   stageNumber: 33
-  starCount: {x: 2, y: 5, z: 6}
-  actionPoint: 30
+  starCount: {x: 5, y: 9, z: 10}
+  actionPoint: 31
   tileInfos:
   - tileNum: 10
     cantRotate: 1
@@ -118,10 +118,10 @@ MonoBehaviour:
     buttons: 000000
   - tileNum: 1
     cantRotate: 0
-    isRotate: 1
+    isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 2
+  - tileNum: 3
     cantRotate: 0
     isRotate: 1
     color: 0

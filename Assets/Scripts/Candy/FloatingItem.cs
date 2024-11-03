@@ -83,17 +83,16 @@ public class FloatingItem : MonoBehaviour
 
                 GetComponent<Candy>().isCatch = true;
                 isFloated = true;
+                elapsedTime = 0f;
+                GameManager.Instance.isCatching = false;
             }
         }
-    }
-    void Rotate(Vector2 objectPosition)
-    {
-        startY = objectPosition.y;
     }
 
     void CatchCandy()
     {
         isFloated = false;
+        GameManager.Instance.isCatching = true;
     }
 
     void UndoCandy((int,int) loc, bool isCatchCandy)

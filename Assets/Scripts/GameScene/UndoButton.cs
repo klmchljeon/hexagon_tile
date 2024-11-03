@@ -20,7 +20,7 @@ public class UndoButton : MonoBehaviour
 
     void Undo()
     {
-        if (GameManager.Instance.isMoving || GameManager.Instance.isRotating)
+        if (GameManager.Instance.isMoving || GameManager.Instance.isRotating || GameManager.Instance.isCatching)
             return;
 
         if (GameManager.Instance.actionStack.Count == 0)

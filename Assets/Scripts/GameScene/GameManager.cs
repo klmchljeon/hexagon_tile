@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     //status
     public bool isMoving = false;
     public bool isRotating = false;
+    public bool isCatching = false;
 
     //touch
     private Vector3 touchDownPosition = Vector3.forward;

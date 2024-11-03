@@ -51,77 +51,12 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 1
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
-    isRotate: 1
-    color: 0
-    buttons: 000000
   - tileNum: 3
+    cantRotate: 1
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 0
     cantRotate: 0
     isRotate: 0
     color: 0
@@ -143,36 +78,16 @@ MonoBehaviour:
     buttons: 000000
   - tileNum: 10
     cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 1
-    cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
   - tileNum: 3
     cantRotate: 0
-    isRotate: 0
+    isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
-    isRotate: 0
-    color: 0
-    buttons: 000000
-  - tileNum: 10
-    cantRotate: 1
+  - tileNum: 2
+    cantRotate: 0
     isRotate: 0
     color: 0
     buttons: 000000
@@ -196,10 +111,95 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  playerInfos:
-  - loc: {x: -1, y: -1}
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 0
     color: 0
-  - loc: {x: 2, y: 3}
+    buttons: 000000
+  - tileNum: 1
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 0
+    cantRotate: 0
+    isRotate: 1
+    color: 0
+    buttons: 000000
+  - tileNum: 2
+    cantRotate: 0
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  - tileNum: 10
+    cantRotate: 1
+    isRotate: 0
+    color: 0
+    buttons: 000000
+  playerInfos:
+  - loc: {x: 3, y: 4}
+    color: 0
+  - loc: {x: -1, y: -1}
     color: 0
   - loc: {x: -1, y: -1}
     color: 0
@@ -208,11 +208,11 @@ MonoBehaviour:
   - loc: {x: -1, y: -1}
     color: 0
   candyInfos:
+  - loc: {x: 3, y: 2}
+    color: 0
   - loc: {x: -1, y: -1}
     color: 0
-  - loc: {x: 4, y: 2}
-    color: 0
-  - loc: {x: 2, y: 5}
+  - loc: {x: 1, y: 2}
     color: 0
   - loc: {x: -1, y: -1}
     color: 0

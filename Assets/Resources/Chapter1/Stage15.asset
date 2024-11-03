@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage15
   m_EditorClassIdentifier: 
   stageNumber: 15
-  starCount: {x: 2, y: 3, z: 4}
+  starCount: {x: 0, y: 3, z: 4}
   actionPoint: 24
   tileInfos:
   - tileNum: 10
@@ -81,8 +81,8 @@ MonoBehaviour:
     isRotate: 0
     color: 0
     buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
+  - tileNum: 10
+    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
@@ -126,8 +126,8 @@ MonoBehaviour:
     isRotate: 1
     color: 0
     buttons: 000000
-  - tileNum: 0
-    cantRotate: 0
+  - tileNum: 10
+    cantRotate: 1
     isRotate: 0
     color: 0
     buttons: 000000
